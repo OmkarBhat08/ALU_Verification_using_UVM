@@ -26,7 +26,7 @@ class alu_monitor extends uvm_monitor;
 		super.run_phase(phase);
 		forever
 		begin
-			@(posedge vif.monitor_cb);
+			repeat(2) @(posedge vif.monitor_cb);
 			alu_sequence_item_monitor.ce = vif.ce;
 			alu_sequence_item_monitor.mode = vif.mode;
 			alu_sequence_item_monitor.inp_valid = vif.inp_valid;
@@ -43,8 +43,11 @@ class alu_monitor extends uvm_monitor;
 			alu_sequence_item_monitor.l = vif.l;
 			alu_sequence_item_monitor.e = vif.e;
 
+			//repeat(2) @(posedge vif.monitor_cb);
+
 			item_collected_port.write(alu_sequence_item_monitor);
+			alu_sequence_item_monitor.print();
+			repeat(1) @(posedge vif.monitor_cb);
 		end
-		alu_sequence_item_monitor.print();
 	endtask
 endclass

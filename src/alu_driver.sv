@@ -2,10 +2,10 @@
 //`include "alu_sequence_item.sv"
 //n import uvm_pkg ::*;
 
-class alu_driver extends uvm_driver;
+class alu_driver extends uvm_driver#(alu_sequence_item);
 	
 	virtual alu_interfs vif;
-	uvm_analysis_port #(uvm_sequence_item) item_collected_port;
+	uvm_analysis_port #(alu_sequence_item) item_collected_port;
 
 	`uvm_component_utils(alu_driver)
 
@@ -34,7 +34,7 @@ class alu_driver extends uvm_driver;
 		@(posedge vif.driver_cb);
 		vif.ce <= req.ce;
 		vif.mode <= req.mode;
-		vif.inp_valid <= req.in_valid;
+		vif.inp_valid <= req.inp_valid;
 		vif.cmd <= req.cmd;
 		vif.opa <= req.opa;
 		vif.opb <= req.opb;
@@ -42,5 +42,6 @@ class alu_driver extends uvm_driver;
 		
 		req.print();
 		item_collected_port.write(req);
+		repeat(1) @(posedge vif.driver_cb);
 	endtask
 endclass

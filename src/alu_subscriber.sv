@@ -8,13 +8,13 @@
 
 class alu_subscriber extends uvm_component;
 
-	`uvm_component_utils(alu_subscriber)
-
 	uvm_analysis_imp_drv_cg #(alu_sequence_item, alu_subscriber) aport_drv;
 	uvm_analysis_imp_mon_cg #(alu_sequence_item, alu_subscriber) aport_mon;
 
 	alu_sequence_item trans_drv, trans_mon;
 	real drv_cov, mon_cov;
+
+	`uvm_component_utils(alu_subscriber)
 
 	covergroup driver_cov;
 		//reset: coverpoint trans_drv.rst;

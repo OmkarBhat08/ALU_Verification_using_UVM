@@ -22,8 +22,11 @@ class alu_test extends uvm_test;
 		alu_sequence seq;
 		super.run_phase(phase);
 		phase.raise_objection(this, "Objection Raised");
+	repeat(2)
+	begin
 		seq = alu_sequence::type_id::create("seq");	
-		seq.start(env.agnt.seqr);
+		seq.start(env.agnt.seqr);		//Check this
+	end
 		phase.drop_objection(this, "Objection Dropped");
 	endtask
 

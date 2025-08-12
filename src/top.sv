@@ -44,7 +44,7 @@ module top;
 
 	initial
 	begin
-		uvm_config_db #(virtual interfs)::set(uvm_root::get(),"*","vif",vif);
+		uvm_config_db #(virtual alu_interfs)::set(uvm_root::get(),"*","vif",vif);
 		$dumpfile("dump.vcd");
 		$dumpvars;
 	end
