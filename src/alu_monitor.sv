@@ -46,6 +46,7 @@ class alu_monitor extends uvm_monitor;
 			//repeat(2) @(posedge vif.monitor_cb);
 
 			item_collected_port.write(alu_sequence_item_monitor);
+			$display("--------------------------------------------MONITOR----------------------------------------");
 			alu_sequence_item_monitor.print();
 			repeat(1) @(posedge vif.monitor_cb);
 		end

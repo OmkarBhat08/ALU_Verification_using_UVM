@@ -24,7 +24,9 @@ class alu_environment extends uvm_env;
 
 	function void connect_phase(uvm_phase phase);
 		super.connect_phase(phase);
-		agnt.mon.item_collected_port.connect(scb.item_collected_export);
+		agnt.mon.item_collected_port.connect(scb.monitor_imp);
+		agnt.drv.item_collected_port.connect(scb.driver_imp);
+
 		agnt.drv.item_collected_port.connect(subscr.aport_drv);	
 		agnt.mon.item_collected_port.connect(subscr.aport_mon);	
 	endfunction

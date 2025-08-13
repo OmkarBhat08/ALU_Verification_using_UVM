@@ -23,6 +23,10 @@ interface alu_interfs(input logic clk,rst);
 		input err, res, oflow, cout, g, l, e;	
 	endclocking
 
+	clocking ref_model_cb @(posedge clk);
+		default input #0 output #0;
+	endclocking
+
 	modport DRIVER (clocking driver_cb, input clk, rst);
 	modport MONITOR (clocking monitor_cb, input clk, rst);
 

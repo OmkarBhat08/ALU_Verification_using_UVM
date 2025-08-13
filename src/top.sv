@@ -8,7 +8,7 @@
 import uvm_pkg::*;  
 import alu_pkg::*;
  
-module top;
+module top();
 	bit clk, rst;
 
 	alu_interfs vif (clk, rst);
