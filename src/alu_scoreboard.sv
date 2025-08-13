@@ -14,7 +14,9 @@ class alu_scoreboard extends uvm_scoreboard();
 	uvm_analysis_imp_from_mon #(alu_sequence_item, alu_scoreboard) monitor_imp;
 
 	alu_sequence_item driver_packet[$];
+
 	alu_sequence_item monitor_packet[$];
+
 	alu_sequence_item ref_model_output;
 
 	`uvm_component_utils(alu_scoreboard)
@@ -27,27 +29,36 @@ class alu_scoreboard extends uvm_scoreboard();
 	endfunction
 
 	virtual function void write_from_mon(alu_sequence_item t);
-		$display("Scoreboard received packet from monitor");
+		`uvm_info(get_type_name,"Scoreboard received packet from monitor", UVM_NONE);
 		monitor_packet.push_back(t);
-		$display();
-		t.print();
 	endfunction
 
 	virtual function void write_from_drv(alu_sequence_item u);
-		$display("Scoreboard received from the driver");
+		`uvm_info(get_type_name,"Scoreboard received packet from the driver", UVM_NONE);
 		driver_packet.push_back(u);
-		u.print();
 	endfunction
 
 	virtual task run_phase(uvm_phase phase);
 		alu_sequence_item packet2;
+		alu_sequence_item packet1;
 		super.run_phase(phase);
 		forever
 		begin
-			wait(driver_packet.size() > 0)
+			wait((driver_packet.size() > 0) && (monitor_packet.size() > 0))
 			packet2 = driver_packet.pop_front();
-			//Reference model and compare
+			packet1 = monitor_packet.pop_front();
+
+			// Reference model
 			begin
+				ref_model_output.rst = packet2.rst;
+				ref_model_output.ce = packet2.ce;
+				ref_model_output.mode = packet2.mode;
+				ref_model_output.cmd = packet2.cmd;
+				ref_model_output.inp_valid = packet2.inp_valid;
+				ref_model_output.ce = packet2.ce;
+				ref_model_output.opa = packet2.opa;
+				ref_model_output.opb = packet2.opb;
+				ref_model_output.cin = packet2.cin;
 				if(packet2.rst)
 				begin
 					ref_model_output.res = {`WIDTH{1'b0}};
@@ -64,13 +75,13 @@ class alu_scoreboard extends uvm_scoreboard();
 					begin
 						if(packet2.mode)		// Arithmetic operations
 						begin
-							ref_model_output.res = {`WIDTH{1'b0}};
-							ref_model_output.oflow = 1'b0;
-							ref_model_output.cout = 1'b0;
-							ref_model_output.g = 1'b0;
-							ref_model_output.l = 1'b0;
-							ref_model_output.e = 1'b0;
-							ref_model_output.err = 1'b0;
+							ref_model_output.res = {`WIDTH{1'bz}};
+							ref_model_output.oflow = 1'bz;
+							ref_model_output.cout = 1'bz;
+							ref_model_output.g = 1'bz;
+							ref_model_output.l = 1'bz;
+							ref_model_output.e = 1'bz;
+							ref_model_output.err = 1'bz;
 							if((packet2.cmd < 4) || (packet2.cmd > 7 && packet2.cmd <11))	// All 2 operand operations
 							begin
 								if(packet2.inp_valid == 2'b00)
@@ -207,9 +218,6 @@ class alu_scoreboard extends uvm_scoreboard();
 									end
 								end
 							end
-							$display("----------------------------------------------Reference model @time = %0t-----------------------------------------------",$time);
-							$display("@time=%0t | inp_valid=%b | mode=%b | cmd=%0d | ce=%b | opa=%0d | opb=%0d | cin=%b",$time, packet2.inp_valid, packet2.mode,packet2.cmd,packet2.ce,packet2.opa,packet2.opb,packet2.cin);
-							$display("@time=%0t | err=%b | res=%0d | oflow=%b | cout=%b | g=%b | l=%b | e=%b",$time,ref_model_output.err,ref_model_output.res,ref_model_output.oflow,ref_model_output.cout,ref_model_output.g,ref_model_output.l,ref_model_output.e);
 							//repeat(1)@(vif.ref_model_cb);
 						end		// Arithmetic opeation ends
 						else	//logical operations
@@ -329,12 +337,40 @@ class alu_scoreboard extends uvm_scoreboard();
 										ref_model_output.res = {1'b0,packet2.opb << 1};
 								end
 							end
-							$display("----------------------------------------------Reference model @time = %0t-----------------------------------------------",$time);
-							$display("@time=%0t | inp_valid=%b | mode=%b | cmd=%0d | ce=%b | opa=%b | opb=%b | cin=%b",$time, packet2.inp_valid, packet2.mode,packet2.cmd,packet2.ce,packet2.opa,packet2.opb,packet2.cin);
-							$display("@time=%0t | err=%b | res=%b | oflow=%b | cout=%b | g=%b | l=%b | e=%b",$time,ref_model_output.err,ref_model_output.res,ref_model_output.oflow,ref_model_output.cout,ref_model_output.g,ref_model_output.l,ref_model_output.e);
 							//repeat(1)@(vif.ref_model_cb);
 						end		// logical opeation ends
 					end			// ce = 1 ends
+				end
+			end		// Reference model end
+			begin		// Compare 
+				$display("Field\t\t|\tReference Output\t|\tActual Response");
+				$display("--------------|-------------------------------|--------------------------------");
+				$display("rst\t\t|\t\t%b\t\t|\t\t%b", ref_model_output.rst, packet1.rst);
+				$display("ce\t\t|\t\t%b\t\t|\t\t%b", ref_model_output.ce, packet1.ce);
+				$display("mode\t\t|\t\t%b\t\t|\t\t%b", ref_model_output.mode, packet1.mode);
+				$display("cmd\t\t|\t\t%0d\t\t|\t\t%0d", ref_model_output.cmd, packet1.cmd);
+				$display("inp_valid\t|\t\t%b\t\t|\t\t%b", ref_model_output.inp_valid, packet1.inp_valid);
+				$display("opa\t\t|\t\t%0d\t\t|\t\t%0d", ref_model_output.opa, packet1.opa);
+				$display("opb\t\t|\t\t%0d\t\t|\t\t%0d	", ref_model_output.opb, packet1.opb);
+				$display("cin\t\t|\t\t%b\t\t|\t\t%b", ref_model_output.cin, packet1.cin);
+				$display("res\t\t|\t\t%0d\t\t|\t\t%0d", ref_model_output.res, packet1.res);
+				$display("err\t\t|\t\t%b\t\t|\t\t%b", ref_model_output.err, packet1.err);
+				$display("oflow\t\t|\t\t%b\t\t|\t\t%b", ref_model_output.oflow, packet1.oflow);
+				$display("cout\t\t|\t\t%b\t\t|\t\t%b", ref_model_output.cout, packet1.cout);
+				$display("g\t\t|\t\t%b\t\t|\t\t%b", ref_model_output.g, packet1.g);
+				$display("l\t\t|\t\t%b\t\t|\t\t%b", ref_model_output.l, packet1.l);
+				$display("e\t\t|\t\t%b\t\t|\t\t%b", ref_model_output.e, packet1.e);
+				if((packet1.res === ref_model_output.res) && (packet1.err === ref_model_output.err) && (packet1.oflow === ref_model_output.oflow) && (packet1.cout === ref_model_output.cout) && (packet1.g === ref_model_output.g) && (packet1.l === ref_model_output.l) && (packet1.e === ref_model_output.e))
+				begin
+					`uvm_info(get_type_name(), $sformatf("\n----------------------------------------------------------------------"), UVM_NONE);
+					$display("	           		TEST PASS																	");
+					$display("----------------------------------------------------------------------");
+				end
+				else
+				begin
+					`uvm_info(get_type_name(), $sformatf("\n----------------------------------------------------------------------"), UVM_NONE);
+					$display("	           		TEST FAILED																	");
+					$display("----------------------------------------------------------------------");
 				end
 			end
 		end

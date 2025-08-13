@@ -7,3 +7,5 @@ vlog:
 clean:
 	rm -rf work/
 	rm transcript
+	clear
+	clear
