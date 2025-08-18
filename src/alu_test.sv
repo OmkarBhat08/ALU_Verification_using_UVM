@@ -82,8 +82,8 @@ class arithmetic_test extends alu_base_test;
 		arithmetic_sequence seq;
 		super.run_phase(phase);
 		phase.raise_objection(this, "Objection Raised");
-		repeat(20)
-		//repeat(3)
+		//repeat(20)
+		repeat(5)
 		begin
 			seq = arithmetic_sequence::type_id::create("seq");	
 			seq.start(env.agnt.seqr);

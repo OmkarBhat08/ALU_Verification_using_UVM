@@ -31,7 +31,7 @@ class alu_driver extends uvm_driver#(alu_sequence_item);
 	endtask
 
 	virtual task drive();
-			repeat(2)@(posedge vif.driver_cb);
+			//repeat(2)@(posedge vif.driver_cb);
 	$display("Driver start : %0t",$time);
 			vif.rst <= req.rst;
 			vif.ce <= req.ce;
@@ -44,7 +44,8 @@ class alu_driver extends uvm_driver#(alu_sequence_item);
 			
 		$display("--------------------------------------------------DRIVER @%0t----------------------------------------------",$time);
 		req.print();
-		repeat(4) @(posedge vif.driver_cb);
+		//repeat(4) @(posedge vif.driver_cb);
+		repeat(3) @(posedge vif.driver_cb);
 
 		item_collected_port.write(req);
 	endtask

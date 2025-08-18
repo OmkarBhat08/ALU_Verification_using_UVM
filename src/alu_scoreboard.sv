@@ -95,7 +95,7 @@ class alu_scoreboard extends uvm_scoreboard();
 											4'd0:	//ADD
 											begin
 												ref_model_output.res = packet2.opa + packet2.opb;
-												ref_model_output.cout = (ref_model_output.res[`WIDTH])?1:1'bz;
+												ref_model_output.cout = (ref_model_output.res[`WIDTH])?1:1'b0;
 											end
 											4'd1:	//SUB
 											begin
@@ -144,7 +144,7 @@ class alu_scoreboard extends uvm_scoreboard();
 											4'd0:	//ADD
 											begin
 												ref_model_output.res = packet2.opa + packet2.opb;
-												ref_model_output.cout = (ref_model_output.res[`WIDTH])?1:1'bz;
+												ref_model_output.cout = (ref_model_output.res[`WIDTH])?1:1'b0;
 											end
 											4'd1:	//SUB
 											begin
