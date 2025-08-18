@@ -17,7 +17,7 @@ class alu_scoreboard extends uvm_scoreboard();
 
 	alu_sequence_item monitor_packet[$];
 
-	alu_sequence_item ref_model_output;
+	alu_sequence_item ref_model_output,prev_output;
 
 	`uvm_component_utils(alu_scoreboard)
 
@@ -26,6 +26,9 @@ class alu_scoreboard extends uvm_scoreboard();
 		driver_imp = new("driver_imp", this);
 		monitor_imp = new("monitor_imp", this);
 		ref_model_output = new();
+		prev_output = new();
+		if( !uvm_config_db #(virtual alu_interfs)::get(this, "","vif", vif))
+			`uvm_fatal(get_type_name(), "Not set at top");
 	endfunction
 
 	virtual function void write_from_mon(alu_sequence_item t);
@@ -61,13 +64,13 @@ class alu_scoreboard extends uvm_scoreboard();
 				ref_model_output.cin = packet2.cin;
 				if(packet2.rst)
 				begin
-					ref_model_output.res = {`WIDTH{1'b0}};
-					ref_model_output.oflow = 1'b0;
-					ref_model_output.cout = 1'b0;
-					ref_model_output.g = 1'b0;
-					ref_model_output.l = 1'b0;
-					ref_model_output.e = 1'b0;
-					ref_model_output.err = 1'b0;
+					ref_model_output.res = 'bz;
+					ref_model_output.oflow = 1'bz;
+					ref_model_output.cout = 1'bz;
+					ref_model_output.g = 1'bz;
+					ref_model_output.l = 1'bz;
+					ref_model_output.e = 1'bz;
+					ref_model_output.err = 1'bz;
 				end
 				else
 				begin
@@ -75,7 +78,7 @@ class alu_scoreboard extends uvm_scoreboard();
 					begin
 						if(packet2.mode)		// Arithmetic operations
 						begin
-							ref_model_output.res = {`WIDTH{1'bz}};
+							ref_model_output.res = 'bz;
 							ref_model_output.oflow = 1'bz;
 							ref_model_output.cout = 1'bz;
 							ref_model_output.g = 1'bz;
@@ -92,22 +95,22 @@ class alu_scoreboard extends uvm_scoreboard();
 											4'd0:	//ADD
 											begin
 												ref_model_output.res = packet2.opa + packet2.opb;
-												ref_model_output.cout = ref_model_output.res[`WIDTH];
+												ref_model_output.cout = (ref_model_output.res[`WIDTH])?1:1'bz;
 											end
 											4'd1:	//SUB
 											begin
 												ref_model_output.res = packet2.opa - packet2.opb;
-												ref_model_output.oflow = (packet2.opa < packet2.opb);
+												ref_model_output.oflow = (packet2.opa < packet2.opb)?1:0;
 											end
 											4'd2:	//ADD_CIN
 											begin
 												ref_model_output.res = packet2.opa + packet2.opb + packet2.cin;
-												ref_model_output.cout = ref_model_output.res[`WIDTH];
+												ref_model_output.cout = (ref_model_output.res[`WIDTH])?1:1'bz;
 											end
 											4'd3:	// SUB_CIN
 											begin
 												ref_model_output.res = (packet2.opa - packet2.opb) - packet2.cin;
-												ref_model_output.oflow = packet2.opa < packet2.opb || ( packet2.opa == packet2.opb && packet2.cin);
+												ref_model_output.oflow = (packet2.opa < packet2.opb || ( packet2.opa == packet2.opb && packet2.cin))?1:0;
 											end
 											4'd8:	// CMP
 											begin
@@ -141,22 +144,22 @@ class alu_scoreboard extends uvm_scoreboard();
 											4'd0:	//ADD
 											begin
 												ref_model_output.res = packet2.opa + packet2.opb;
-												ref_model_output.cout = ref_model_output.res[`WIDTH];
+												ref_model_output.cout = (ref_model_output.res[`WIDTH])?1:1'bz;
 											end
 											4'd1:	//SUB
 											begin
 												ref_model_output.res = packet2.opa - packet2.opb;
-												ref_model_output.oflow = (packet2.opa < packet2.opb);
+												ref_model_output.oflow = (packet2.opa < packet2.opb)?1:0;
 											end
 											4'd2:	//ADD_CIN
 											begin
 												ref_model_output.res = packet2.opa + packet2.opb + packet2.cin;
-												ref_model_output.cout = ref_model_output.res[`WIDTH];
+												ref_model_output.cout = (ref_model_output.res[`WIDTH])?1:1'bz;
 											end
 											4'd3:	// SUB_CIN
 											begin
 												ref_model_output.res = (packet2.opa - packet2.opb) - packet2.cin;
-												ref_model_output.oflow = packet2.opa < packet2.opb || ( packet2.opa == packet2.opb && packet2.cin);
+												ref_model_output.oflow = (packet2.opa < packet2.opb || ( packet2.opa == packet2.opb && packet2.cin))?1:0;
 											end
 											4'd8:	// CMP
 											begin
@@ -169,7 +172,7 @@ class alu_scoreboard extends uvm_scoreboard();
 											end	
 											4'd9:	//Increment and multiply
 											begin
-											//	repeat(1) @ (vif.ref_model_cb);
+												repeat(1) @ (posedge vif.ref_model_cb);
 												ref_model_output.res = (packet2.opa + 1) * (packet2.opb+1);
 											end
 											4'd10:	//Shift and multiply
@@ -188,15 +191,9 @@ class alu_scoreboard extends uvm_scoreboard();
 								else
 								begin
 									if(packet2.cmd == 4)		// INC_A
-									begin
 										ref_model_output.res = packet2.opa + 1;
-										ref_model_output.cout = ref_model_output.res[`WIDTH];
-									end
 									else		// DEC_A
-									begin
 										ref_model_output.res = packet2.opa - 1;
-										ref_model_output.oflow = packet2.opb==0;
-									end
 								end
 							end
 
@@ -207,28 +204,22 @@ class alu_scoreboard extends uvm_scoreboard();
 								else
 								begin
 									if(packet2.cmd == 6)		// INC_B
-									begin
 										ref_model_output.res = packet2.opb + 1;
-										ref_model_output.cout = ref_model_output.res[`WIDTH];
-									end
 									else		// DEC_B
-									begin
 										ref_model_output.res = packet2.opb - 1;
-										ref_model_output.oflow = packet2.opb==0;
-									end
 								end
 							end
 							//repeat(1)@(vif.ref_model_cb);
 						end		// Arithmetic opeation ends
 						else	//logical operations
 						begin
-							ref_model_output.res = {`WIDTH{1'b0}};
-							ref_model_output.oflow = 1'b0;
-							ref_model_output.cout = 1'b0;
-							ref_model_output.g = 1'b0;
-							ref_model_output.l = 1'b0;
-							ref_model_output.e = 1'b0;
-							ref_model_output.err = 1'b0;
+							ref_model_output.res = {`WIDTH{1'bz}};
+							ref_model_output.oflow = 1'bz;
+							ref_model_output.cout = 1'bz;
+							ref_model_output.g = 1'bz;
+							ref_model_output.l = 1'bz;
+							ref_model_output.e = 1'bz;
+							ref_model_output.err = 1'bz;
 							if((packet2.cmd < 6) || (packet2.cmd > 11 && packet2.cmd < 14))	// All 2 operand operations
 							begin
 								if(packet2.inp_valid == 2'b00)
@@ -313,13 +304,9 @@ class alu_scoreboard extends uvm_scoreboard();
 									if(packet2.cmd == 6)		// NOT_A
 										ref_model_output.res = {1'b0,~(packet2.opa)};
 									else if(packet2.cmd == 8)		// SHR1_A
-									begin
 										ref_model_output.res = {1'b0,packet2.opa >> 1};
-									end
 									else		// SHL1_A
-									begin
 										ref_model_output.res = {1'b0,packet2.opa << 1};
-									end
 								end
 							end
 
@@ -339,12 +326,26 @@ class alu_scoreboard extends uvm_scoreboard();
 							end
 							//repeat(1)@(vif.ref_model_cb);
 						end		// logical opeation ends
+						//prev_output = new
 					end			// ce = 1 ends
+					else
+					begin
+						ref_model_output.res = prev_output.res;
+						ref_model_output.oflow = prev_output.oflow;
+						ref_model_output.cout = prev_output.cout;
+						ref_model_output.g = prev_output.g;
+						ref_model_output.l = prev_output.l;
+						ref_model_output.e = prev_output.e;
+						ref_model_output.err = prev_output.err;
+					end
 				end
 			end		// Reference model end
 			begin		// Compare 
+				//if(packet2.cmd == 9 && packet2.mode == 1)
+					//repeat(1) @(posedge vif.ref_model_cb);
+												repeat(1) @ (posedge vif.ref_model_cb);
 				$display("Field\t\t|\tReference Output\t|\tActual Response");
-				$display("--------------|-------------------------------|--------------------------------");
+				$display("--------------|-------------------------------|-----------------------------");
 				$display("rst\t\t|\t\t%b\t\t|\t\t%b", ref_model_output.rst, packet1.rst);
 				$display("ce\t\t|\t\t%b\t\t|\t\t%b", ref_model_output.ce, packet1.ce);
 				$display("mode\t\t|\t\t%b\t\t|\t\t%b", ref_model_output.mode, packet1.mode);
@@ -362,15 +363,15 @@ class alu_scoreboard extends uvm_scoreboard();
 				$display("e\t\t|\t\t%b\t\t|\t\t%b", ref_model_output.e, packet1.e);
 				if((packet1.res === ref_model_output.res) && (packet1.err === ref_model_output.err) && (packet1.oflow === ref_model_output.oflow) && (packet1.cout === ref_model_output.cout) && (packet1.g === ref_model_output.g) && (packet1.l === ref_model_output.l) && (packet1.e === ref_model_output.e))
 				begin
-					`uvm_info(get_type_name(), $sformatf("\n----------------------------------------------------------------------"), UVM_NONE);
+					`uvm_info(get_type_name(), $sformatf("\n------------------------------------------------------------------------------"), UVM_NONE);
 					$display("	           		TEST PASS																	");
-					$display("----------------------------------------------------------------------");
+					$display("------------------------------------------------------------------------------");
 				end
 				else
 				begin
-					`uvm_info(get_type_name(), $sformatf("\n----------------------------------------------------------------------"), UVM_NONE);
+					`uvm_info(get_type_name(), $sformatf("\n------------------------------------------------------------------------------"), UVM_NONE);
 					$display("	           		TEST FAILED																	");
-					$display("----------------------------------------------------------------------");
+					$display("------------------------------------------------------------------------------");
 				end
 			end
 		end

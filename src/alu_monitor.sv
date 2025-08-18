@@ -25,8 +25,12 @@ class alu_monitor extends uvm_monitor;
 	virtual task run_phase(uvm_phase phase);
 		super.run_phase(phase);
 		forever
+			// Check this delay
 		begin
-			repeat(4) @(posedge vif.monitor_cb);
+			if(vif.cmd == 9 && vif.mode == 1)
+				repeat(6) @(posedge vif.monitor_cb);
+			else
+				repeat(4) @(posedge vif.monitor_cb);
 			alu_sequence_item_monitor.rst = vif.rst;
 			alu_sequence_item_monitor.ce = vif.ce;
 			alu_sequence_item_monitor.mode = vif.mode;

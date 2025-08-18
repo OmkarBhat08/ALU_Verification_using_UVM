@@ -32,15 +32,15 @@ class alu_driver extends uvm_driver#(alu_sequence_item);
 
 	virtual task drive();
 		repeat(2)@(posedge vif.driver_cb);
-		req.rst <= vif.rst; 
-		vif.ce <= req.ce;
-		vif.mode <= req.mode;
-		vif.inp_valid <= req.inp_valid;
-		vif.cmd <= req.cmd;
-		vif.opa <= req.opa;
-		vif.opb <= req.opb;
-		vif.cin <= req.cin;
-		
+			vif.rst <= req.rst;
+			vif.ce <= req.ce;
+			vif.mode <= req.mode;
+			vif.inp_valid <= req.inp_valid;
+			vif.cmd <= req.cmd;
+			vif.opa <= req.opa;
+			vif.opb <= req.opb;
+			vif.cin <= req.cin;
+			
 		$display("--------------------------------------------DRIVER----------------------------------------");
 		req.print();
 		repeat(3) @(posedge vif.driver_cb);
