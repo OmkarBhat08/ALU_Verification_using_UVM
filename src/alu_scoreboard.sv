@@ -172,7 +172,7 @@ class alu_scoreboard extends uvm_scoreboard();
 											end	
 											4'd9:	//Increment and multiply
 											begin
-												repeat(1) @ (posedge vif.ref_model_cb);
+												//repeat(1) @ (posedge vif.ref_model_cb);
 												ref_model_output.res = (packet2.opa + 1) * (packet2.opb+1);
 											end
 											4'd10:	//Shift and multiply
@@ -341,9 +341,6 @@ class alu_scoreboard extends uvm_scoreboard();
 				end
 			end		// Reference model end
 			begin		// Compare 
-				//if(packet2.cmd == 9 && packet2.mode == 1)
-					//repeat(1) @(posedge vif.ref_model_cb);
-												repeat(1) @ (posedge vif.ref_model_cb);
 				$display("Field\t\t|\tReference Output\t|\tActual Response");
 				$display("--------------|-------------------------------|-----------------------------");
 				$display("rst\t\t|\t\t%b\t\t|\t\t%b", ref_model_output.rst, packet1.rst);

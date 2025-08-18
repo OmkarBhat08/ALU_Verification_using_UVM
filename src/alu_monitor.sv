@@ -25,12 +25,9 @@ class alu_monitor extends uvm_monitor;
 	virtual task run_phase(uvm_phase phase);
 		super.run_phase(phase);
 		forever
-			// Check this delay
 		begin
-			if(vif.cmd == 9 && vif.mode == 1)
-				repeat(6) @(posedge vif.monitor_cb);
-			else
-				repeat(4) @(posedge vif.monitor_cb);
+				repeat(5) @(posedge vif.monitor_cb);
+			$display("---------------------------------------------------MONITOR @ %0t----------------------------------------------",$time);
 			alu_sequence_item_monitor.rst = vif.rst;
 			alu_sequence_item_monitor.ce = vif.ce;
 			alu_sequence_item_monitor.mode = vif.mode;
@@ -48,12 +45,8 @@ class alu_monitor extends uvm_monitor;
 			alu_sequence_item_monitor.l = vif.l;
 			alu_sequence_item_monitor.e = vif.e;
 
-			//repeat(2) @(posedge vif.monitor_cb);
-
-			//item_collected_port.write(alu_sequence_item_monitor);
-			$display("--------------------------------------------MONITOR----------------------------------------");
 			alu_sequence_item_monitor.print();
-			repeat(2) @(posedge vif.monitor_cb);
+			repeat(1) @(posedge vif.monitor_cb);
 			item_collected_port.write(alu_sequence_item_monitor);
 		end
 	endtask
