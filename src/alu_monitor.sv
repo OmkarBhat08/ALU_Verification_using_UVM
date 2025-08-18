@@ -23,6 +23,14 @@ class alu_monitor extends uvm_monitor;
 		forever
 		begin
 			repeat(3) @(posedge vif.monitor_cb);
+
+/*
+			if(((req.mode == 1) && ((req.cmd != 4) || (req.cmd != 5) || (req.cmd != 6) || (req.cmd != 7))) || ((req.mode == 0) && ((req.cmd != 6) || (req.cmd != 7) || (req.cmd != 8) || (req.cmd != 9) || (req.cmd != 10) || (req.cmd != 11))))
+			begin
+				if()
+			end
+			else
+*/
 			$display("---------------------------------------------------MONITOR @ %0t----------------------------------------------",$time);
 			alu_sequence_item_monitor.rst = vif.rst;
 			alu_sequence_item_monitor.ce = vif.ce;

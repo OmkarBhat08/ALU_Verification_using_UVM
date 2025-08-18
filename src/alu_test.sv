@@ -56,7 +56,7 @@ class latch_test extends alu_base_test;
 		latch_sequence seq;
 		super.run_phase(phase);
 		phase.raise_objection(this, "Objection Raised");
-		repeat(20)
+		repeat(1)
 		begin
 			seq = latch_sequence::type_id::create("seq");	
 			seq.start(env.agnt.seqr);
@@ -111,6 +111,31 @@ class logical_test extends alu_base_test;
 		repeat(20)
 		begin
 			seq = logical_sequence::type_id::create("seq");	
+			seq.start(env.agnt.seqr);
+			$display("############################################################################################################################");
+		end
+		phase.drop_objection(this, "Objection Dropped");
+	endtask
+
+	virtual function void end_of_elaboration();
+		print();
+	endfunction
+endclass
+//---------------------------------------------------------------------------------------------------------
+class regression_test extends alu_base_test;
+	`uvm_component_utils(regression_test)
+
+	function new(string name = "regression_test", uvm_component parent = null);
+		super.new(name, parent);
+	endfunction
+
+	virtual task run_phase(uvm_phase phase);
+		regression_sequence seq;
+		super.run_phase(phase);
+		phase.raise_objection(this, "Objection Raised");
+		repeat(100)
+		begin
+			seq = regression_sequence::type_id::create("seq");	
 			seq.start(env.agnt.seqr);
 			$display("############################################################################################################################");
 		end
