@@ -1,9 +1,3 @@
-//n `include "uvm_macros.svh"
-//n `include "alu_sequencer.sv"
-//n `include "alu_driver.sv"
-//n `include "alu_monitor.sv"
-//n import uvm_pkg ::*;
-
 class alu_agent extends uvm_agent;
 	alu_sequencer seqr;
 	alu_driver drv;

@@ -1,9 +1,3 @@
-//n `include "uvm_macros.svh"
-//n `include "alu_agent.sv"
-//n `include "alu_scoreboard.sv"
-//n `include "alu_subscriber.sv"
-//n import uvm_pkg ::*;
-
 class alu_environment extends uvm_env;
 	alu_agent agnt;
 	alu_scoreboard scb;

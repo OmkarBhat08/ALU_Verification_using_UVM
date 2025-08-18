@@ -1,7 +1,3 @@
-//n `include "uvm_macros.svh"
-//`include "alu_sequence_item.sv"
-//n import uvm_pkg ::*;
-
 class alu_monitor extends uvm_monitor;
 
 	virtual alu_interfs vif;
@@ -46,7 +42,6 @@ class alu_monitor extends uvm_monitor;
 			alu_sequence_item_monitor.e = vif.e;
 
 			alu_sequence_item_monitor.print();
-			//repeat(1) @(posedge vif.monitor_cb);
 			item_collected_port.write(alu_sequence_item_monitor);
 		end
 	endtask

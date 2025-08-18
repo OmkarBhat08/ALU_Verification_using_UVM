@@ -1,6 +1,3 @@
-//`include "uvm_macros.svh"
-//`include "uvm_pkg.sv"
-
 `include "defines.sv"
 `include "alu_interfs.sv"
 `include "alu_pkg.sv"

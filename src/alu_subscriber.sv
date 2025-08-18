@@ -1,8 +1,3 @@
-//n `include "uvm_macros.svh"
-//`include "alu_sequence_item.sv"
-
-//n import uvm_pkg ::*;
-
 `uvm_analysis_imp_decl(_drv_cg)
 `uvm_analysis_imp_decl(_mon_cg)
 

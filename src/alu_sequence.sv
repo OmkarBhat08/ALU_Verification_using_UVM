@@ -1,6 +1,3 @@
-//n `include "uvm_macros.svh"
-// `include "alu_sequence_item.sv"
-//n import uvm_pkg ::*;
 class alu_sequence extends uvm_sequence #(alu_sequence_item);
 	`uvm_object_utils(alu_sequence)
 
@@ -49,8 +46,7 @@ class arithmetic_sequence extends uvm_sequence #(alu_sequence_item);
 	endfunction
 
 	virtual task body();
-	//`uvm_do_with(req,{req.rst == 0;req.ce == 1; req.mode == 1; req.inp_valid == 3; req.cmd inside{[0:10]};});
-	`uvm_do_with(req,{req.rst == 0;req.ce == 1; req.mode == 1; req.inp_valid == 3; req.cmd inside{9};});
+		`uvm_do_with(req,{req.rst == 0;req.ce == 1; req.mode == 1; req.inp_valid == 3; req.cmd inside{[0:10]};});
 	endtask
 endclass
 //------------------------------------------------------------------------------------------------------

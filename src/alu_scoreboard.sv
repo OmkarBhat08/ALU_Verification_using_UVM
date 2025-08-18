@@ -324,9 +324,8 @@ class alu_scoreboard extends uvm_scoreboard();
 										ref_model_output.res = {1'b0,packet2.opb << 1};
 								end
 							end
-							//repeat(1)@(vif.ref_model_cb);
 						end		// logical opeation ends
-						//prev_output = new
+						prev_output = ref_model_output;
 					end			// ce = 1 ends
 					else
 					begin
