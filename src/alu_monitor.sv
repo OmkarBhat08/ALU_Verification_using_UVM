@@ -24,33 +24,33 @@ class alu_monitor extends uvm_monitor;
 		begin
 			repeat(3) @(posedge vif.monitor_cb);
 
-/*
-			if(((req.mode == 1) && ((req.cmd != 4) || (req.cmd != 5) || (req.cmd != 6) || (req.cmd != 7))) || ((req.mode == 0) && ((req.cmd != 6) || (req.cmd != 7) || (req.cmd != 8) || (req.cmd != 9) || (req.cmd != 10) || (req.cmd != 11))))
+			if((((vif.mode == 1) && ( vif.cmd < 4 || (vif.cmd > 7 && vif.cmd < 11)))||((vif.mode == 0) && (vif.cmd < 6 || vif.cmd == 12 || vif.cmd == 13))) && (vif.inp_valid == 1 || vif.inp_valid == 2))
 			begin
-				if()
+				// Do not read
 			end
 			else
-*/
-			$display("---------------------------------------------------MONITOR @ %0t----------------------------------------------",$time);
-			alu_sequence_item_monitor.rst = vif.rst;
-			alu_sequence_item_monitor.ce = vif.ce;
-			alu_sequence_item_monitor.mode = vif.mode;
-			alu_sequence_item_monitor.inp_valid = vif.inp_valid;
-			alu_sequence_item_monitor.cmd = vif.cmd;
-			alu_sequence_item_monitor.opa = vif.opa;
-			alu_sequence_item_monitor.opb = vif.opb;
-			alu_sequence_item_monitor.cin = vif.cin;
+			begin
+				$display("---------------------------------------------------MONITOR @ %0t----------------------------------------------",$time);
+				alu_sequence_item_monitor.rst = vif.rst;
+				alu_sequence_item_monitor.ce = vif.ce;
+				alu_sequence_item_monitor.mode = vif.mode;
+				alu_sequence_item_monitor.inp_valid = vif.inp_valid;
+				alu_sequence_item_monitor.cmd = vif.cmd;
+				alu_sequence_item_monitor.opa = vif.opa;
+				alu_sequence_item_monitor.opb = vif.opb;
+				alu_sequence_item_monitor.cin = vif.cin;
 
-			alu_sequence_item_monitor.res = vif.res;
-			alu_sequence_item_monitor.err = vif.err;
-			alu_sequence_item_monitor.oflow = vif.oflow;
-			alu_sequence_item_monitor.cout = vif.cout;
-			alu_sequence_item_monitor.g = vif.g;
-			alu_sequence_item_monitor.l = vif.l;
-			alu_sequence_item_monitor.e = vif.e;
+				alu_sequence_item_monitor.res = vif.res;
+				alu_sequence_item_monitor.err = vif.err;
+				alu_sequence_item_monitor.oflow = vif.oflow;
+				alu_sequence_item_monitor.cout = vif.cout;
+				alu_sequence_item_monitor.g = vif.g;
+				alu_sequence_item_monitor.l = vif.l;
+				alu_sequence_item_monitor.e = vif.e;
 
-			alu_sequence_item_monitor.print();
-			item_collected_port.write(alu_sequence_item_monitor);
+				alu_sequence_item_monitor.print();
+				item_collected_port.write(alu_sequence_item_monitor);
+			end
 		end
 	endtask
 endclass

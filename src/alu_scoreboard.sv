@@ -10,6 +10,7 @@ class alu_scoreboard extends uvm_scoreboard();
 	
 	virtual alu_interfs vif;	
 	logic [`POW_2_N - 1 : 0] SH_AMT;
+	reg [3:0] count;
 	uvm_analysis_imp_from_drv #(alu_sequence_item, alu_scoreboard) driver_imp;
 	uvm_analysis_imp_from_mon #(alu_sequence_item, alu_scoreboard) monitor_imp;
 
@@ -17,7 +18,7 @@ class alu_scoreboard extends uvm_scoreboard();
 
 	alu_sequence_item monitor_packet[$];
 
-	alu_sequence_item ref_model_output,prev_output;
+	alu_sequence_item ref_model_output,prev_output, condition_packet;
 
 	`uvm_component_utils(alu_scoreboard)
 
@@ -27,6 +28,8 @@ class alu_scoreboard extends uvm_scoreboard();
 		monitor_imp = new("monitor_imp", this);
 		ref_model_output = new();
 		prev_output = new();
+		condition_packet = new();
+		count = 0;
 		if( !uvm_config_db #(virtual alu_interfs)::get(this, "","vif", vif))
 			`uvm_fatal(get_type_name(), "Not set at top");
 	endfunction
@@ -38,6 +41,7 @@ class alu_scoreboard extends uvm_scoreboard();
 
 	virtual function void write_from_drv(alu_sequence_item u);
 		`uvm_info(get_type_name,"Scoreboard received packet from the driver", UVM_NONE);
+		condition_packet = u;
 		driver_packet.push_back(u);
 	endfunction
 
@@ -47,10 +51,22 @@ class alu_scoreboard extends uvm_scoreboard();
 		super.run_phase(phase);
 		forever
 		begin
-			wait((driver_packet.size() > 0) && (monitor_packet.size() > 0))
-			packet2 = driver_packet.pop_front();
-			packet1 = monitor_packet.pop_front();
 
+			wait((driver_packet.size() > 0));
+				packet2 = driver_packet.pop_front();
+
+				$display("\n\n Packet 2");
+				packet2.print();
+
+			if((((condition_packet.mode == 1) && ( condition_packet.cmd < 4 || (condition_packet.cmd > 7 && condition_packet.cmd < 11)))||((condition_packet.mode == 0) && (condition_packet.cmd < 6 || condition_packet.cmd == 12 || condition_packet.cmd == 13))) && (condition_packet.inp_valid == 1 || condition_packet.inp_valid == 2))
+			begin
+					// Do nothing
+			end
+			else
+			begin
+				wait((monitor_packet.size() > 0));
+				packet1 = monitor_packet.pop_front();
+			end
 			// Reference model
 			begin
 				ref_model_output.rst = packet2.rst;
@@ -88,7 +104,10 @@ class alu_scoreboard extends uvm_scoreboard();
 							if((packet2.cmd < 4) || (packet2.cmd > 7 && packet2.cmd <11))	// All 2 operand operations
 							begin
 								if(packet2.inp_valid == 2'b00)
+								begin
 									ref_model_output.err = 1'b1;
+									count = 0;
+								end
 								else if(packet2.inp_valid == 2'b11)
 								begin
 										case(packet2.cmd)
@@ -126,62 +145,17 @@ class alu_scoreboard extends uvm_scoreboard();
 											4'd10:	//Shift and multiply
 												ref_model_output.res = (packet2.opa << 1) * packet2.opb;
 										endcase
+									count = 0;
 								end
-								else 
+								else	//inp_valid is 01 or 10 
 								begin
-									int i;
-									for(i = 0; i < 16; i++) 
+									if(count == 15)
 									begin
-										//repeat(1) @ (vif.ref_model_cb);
-										if(packet2.inp_valid == 2'b11)
-											break;
-									end	
-									if(i==15)
-										ref_model_output.err = 1'b1;
-									else
-									begin
-										case(packet2.cmd)
-											4'd0:	//ADD
-											begin
-												ref_model_output.res = packet2.opa + packet2.opb;
-												ref_model_output.cout = (ref_model_output.res[`WIDTH])?1:1'b0;
-											end
-											4'd1:	//SUB
-											begin
-												ref_model_output.res = packet2.opa - packet2.opb;
-												ref_model_output.oflow = (packet2.opa < packet2.opb)?1:0;
-											end
-											4'd2:	//ADD_CIN
-											begin
-												ref_model_output.res = packet2.opa + packet2.opb + packet2.cin;
-												ref_model_output.cout = (ref_model_output.res[`WIDTH])?1:1'bz;
-											end
-											4'd3:	// SUB_CIN
-											begin
-												ref_model_output.res = (packet2.opa - packet2.opb) - packet2.cin;
-												ref_model_output.oflow = (packet2.opa < packet2.opb || ( packet2.opa == packet2.opb && packet2.cin))?1:0;
-											end
-											4'd8:	// CMP
-											begin
-												if(packet2.opa == packet2.opb)
-                	    		{ref_model_output.g,ref_model_output.l,ref_model_output.e} = 3'bzz1;
-                  			else if (packet2.opa > packet2.opb)
-                    			{ref_model_output.g,ref_model_output.l,ref_model_output.e} = 3'b1zz;
-                    		else
-        	            		{ref_model_output.g,ref_model_output.l,ref_model_output.e} = 3'bz1z;
-											end	
-											4'd9:	//Increment and multiply
-											begin
-												//repeat(1) @ (posedge vif.ref_model_cb);
-												ref_model_output.res = (packet2.opa + 1) * (packet2.opb+1);
-											end
-											4'd10:	//Shift and multiply
-											begin
-											//	repeat(1) @ (vif.ref_model_cb);
-												ref_model_output.res = (packet2.opa << 1) * packet2.opb;
-											end
-										endcase
+										ref_model_output.err = 1;
+										count = 0;
 									end
+									else
+										count ++;
 								end
 							end
 							if((packet2.cmd == 4) || (packet2.cmd == 5))	// OPA operations
@@ -213,7 +187,7 @@ class alu_scoreboard extends uvm_scoreboard();
 						end		// Arithmetic opeation ends
 						else	//logical operations
 						begin
-							ref_model_output.res = {`WIDTH{1'bz}};
+							ref_model_output.res = 'bz;
 							ref_model_output.oflow = 1'bz;
 							ref_model_output.cout = 1'bz;
 							ref_model_output.g = 1'bz;
@@ -223,7 +197,10 @@ class alu_scoreboard extends uvm_scoreboard();
 							if((packet2.cmd < 6) || (packet2.cmd > 11 && packet2.cmd < 14))	// All 2 operand operations
 							begin
 								if(packet2.inp_valid == 2'b00)
+								begin
 									ref_model_output.err = 1'b1;
+									count = 0;
+								end
 								else if(packet2.inp_valid == 2'b11) 
 								begin
 										case(packet2.cmd)
@@ -252,47 +229,17 @@ class alu_scoreboard extends uvm_scoreboard();
 												ref_model_output.err = |packet2.opb[`WIDTH - 1 : `POW_2_N +1];
 											end
 										endcase
+									count = 0;
 								end
 								else
 								begin
-									int i;
-									for(i = 0; i < 16; i++ ) 
+									if(count == 15)
 									begin
-										//repeat(1) @ (vif.ref_model_cb);
-										if(packet2.inp_valid == 2'b11)
-											break;
-									end	
-									if(i==15)
-										ref_model_output.err = 1'b1;
-									else
-									begin
-										case(packet2.cmd)
-											4'd0:	//AND
-												ref_model_output.res = {1'b0,packet2.opa & packet2.opb};
-											4'd1:	// NAND
-												ref_model_output.res = {1'b0,~(packet2.opa & packet2.opb)};
-											4'd2:	// OR
-												ref_model_output.res = {1'b0,packet2.opa | packet2.opb};
-											4'd3:	// NOR
-												ref_model_output.res = {1'b0,~(packet2.opa | packet2.opb)};
-											4'd4:	// XOR
-												ref_model_output.res = {1'b0,packet2.opa ^ packet2.opb};
-											4'd5:	// XNOR
-												ref_model_output.res = {1'b0,~(packet2.opa ^ packet2.opb)};
-											4'd12:	// ROL_A_B
-											begin
-												SH_AMT = packet2.opb;
-												ref_model_output.res = 16'h00FF & ({1'b0,(packet2.opa << SH_AMT | packet2.opa >> (`WIDTH - SH_AMT))});
-												ref_model_output.err = |packet2.opb[`WIDTH - 1 : `POW_2_N +1];
-											end
-											4'd13:	// ROR_A_B
-											begin
-												SH_AMT = packet2.opb;
-												ref_model_output.res = 16'h00FF & ({1'b0,packet2.opa << (`WIDTH- SH_AMT) | packet2.opa >> SH_AMT});
-												ref_model_output.err = |packet2.opb[`WIDTH - 1 : `POW_2_N +1];
-											end
-										endcase
+										ref_model_output.err = 1;
+										count = 0;
 									end
+									else
+										count ++;
 								end
 							end
 							if((packet2.cmd == 6) || (packet2.cmd == 8) || (packet2.cmd == 9))	// OPA operations

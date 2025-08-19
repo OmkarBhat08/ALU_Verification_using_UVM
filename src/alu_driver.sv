@@ -2,6 +2,7 @@ class alu_driver extends uvm_driver#(alu_sequence_item);
 	reg [3:0] temp_cmd;	
 	reg  temp_mode;	
 	reg [3:0] count;	
+	alu_sequence_item temp_seq;
 	virtual alu_interfs vif;
 	uvm_analysis_port #(alu_sequence_item) item_collected_port;
 
@@ -24,7 +25,6 @@ class alu_driver extends uvm_driver#(alu_sequence_item);
 		forever
 		begin
 			seq_item_port.get_next_item(req);
-			$display("\n\ncount =%0d",count);
 			if((((req.mode == 1) && ( req.cmd < 4 || (req.cmd > 7 && req.cmd < 11)))||((req.mode == 0) && (req.cmd < 6 || req.cmd == 12 || req.cmd == 13))) && (req.inp_valid == 1 || req.inp_valid == 2) && (count != 15))
 			begin
 				if(count == 0)
@@ -76,6 +76,11 @@ class alu_driver extends uvm_driver#(alu_sequence_item);
 	virtual task drive_for_cycle();
 				$display("\n\nInside drive_for_cycle\n\n");
 				$display("\n\n temp_cmd = %0d | temp_mode = %0d", temp_cmd, temp_mode);
+			// Copy values
+				temp_seq = req;
+				temp_seq.mode = temp_mode;
+				temp_seq.cmd = temp_cmd;
+
 				vif.rst = req.rst;
 				vif.ce = req.ce;
 				vif.mode = temp_mode;
@@ -99,6 +104,6 @@ class alu_driver extends uvm_driver#(alu_sequence_item);
 
 		repeat(3) @(posedge vif.driver_cb);
 
-		item_collected_port.write(req);
+		item_collected_port.write(temp_seq);
 	endtask
 endclass
