@@ -1,14 +1,10 @@
-//n `include "uvm_macros.svh"
-//`include "alu_sequence_item.sv"
-//n import uvm_pkg ::*;
-//
 `include "defines.sv"
 `uvm_analysis_imp_decl(_from_drv)
 `uvm_analysis_imp_decl(_from_mon)
 
 class alu_scoreboard extends uvm_scoreboard();
 	
-	virtual alu_interfs vif;	
+//	virtual alu_interfs vif;	
 	logic [`POW_2_N - 1 : 0] SH_AMT;
 	reg [3:0] count;
 	uvm_analysis_imp_from_drv #(alu_sequence_item, alu_scoreboard) driver_imp;
@@ -30,8 +26,8 @@ class alu_scoreboard extends uvm_scoreboard();
 		prev_output = new();
 		condition_packet = new();
 		count = 0;
-		if( !uvm_config_db #(virtual alu_interfs)::get(this, "","vif", vif))
-			`uvm_fatal(get_type_name(), "Not set at top");
+	//	if( !uvm_config_db #(virtual alu_interfs)::get(this, "","vif", vif))
+		//	`uvm_fatal(get_type_name(), "Not set at top");
 	endfunction
 
 	virtual function void write_from_mon(alu_sequence_item t);
@@ -55,14 +51,7 @@ class alu_scoreboard extends uvm_scoreboard();
 			wait((driver_packet.size() > 0));
 				packet2 = driver_packet.pop_front();
 
-				$display("\n\n Packet 2");
-				packet2.print();
-
-			if((((condition_packet.mode == 1) && ( condition_packet.cmd < 4 || (condition_packet.cmd > 7 && condition_packet.cmd < 11)))||((condition_packet.mode == 0) && (condition_packet.cmd < 6 || condition_packet.cmd == 12 || condition_packet.cmd == 13))) && (condition_packet.inp_valid == 1 || condition_packet.inp_valid == 2))
-			begin
-					// Do nothing
-			end
-			else
+			if(!((((condition_packet.mode == 1) && ( condition_packet.cmd < 4 || (condition_packet.cmd > 7 && condition_packet.cmd < 11)))||((condition_packet.mode == 0) && (condition_packet.cmd < 6 || condition_packet.cmd == 12 || condition_packet.cmd == 13))) && (condition_packet.inp_valid == 1 || condition_packet.inp_valid == 2)))
 			begin
 				wait((monitor_packet.size() > 0));
 				packet1 = monitor_packet.pop_front();
@@ -183,7 +172,6 @@ class alu_scoreboard extends uvm_scoreboard();
 										ref_model_output.res = packet2.opb - 1;
 								end
 							end
-							//repeat(1)@(vif.ref_model_cb);
 						end		// Arithmetic opeation ends
 						else	//logical operations
 						begin
@@ -286,6 +274,13 @@ class alu_scoreboard extends uvm_scoreboard();
 					end
 				end
 			end		// Reference model end
+			if((((packet2.mode == 1) && (packet2.cmd < 4 || (packet2.cmd > 7 && packet2.cmd < 11)))||((packet2.mode == 0) && (packet2.cmd < 6 || packet2.cmd == 12 || packet2.cmd == 13))) && (packet2.inp_valid == 1 || packet2.inp_valid == 2))
+			begin
+					`uvm_info(get_type_name(), $sformatf("\n------------------------------------------------------------------------------"), UVM_NONE);
+					$display("	         SCOREBOARD WAITING FOR INP_VALID 11											");
+					$display("------------------------------------------------------------------------------");
+			end
+			else
 			begin		// Compare 
 				$display("Field\t\t|\tReference Output\t|\tActual Response");
 				$display("--------------|-------------------------------|-----------------------------");

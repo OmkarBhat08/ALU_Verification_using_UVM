@@ -74,13 +74,12 @@ class alu_driver extends uvm_driver#(alu_sequence_item);
 	endtask
 
 	virtual task drive_for_cycle();
-				$display("\n\nInside drive_for_cycle\n\n");
-				$display("\n\n temp_cmd = %0d | temp_mode = %0d", temp_cmd, temp_mode);
 			// Copy values
 				temp_seq = req;
 				temp_seq.mode = temp_mode;
 				temp_seq.cmd = temp_cmd;
 
+			// Send to DUT
 				vif.rst = req.rst;
 				vif.ce = req.ce;
 				vif.mode = temp_mode;
