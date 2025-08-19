@@ -12,42 +12,15 @@ class alu_subscriber extends uvm_component;
 	`uvm_component_utils(alu_subscriber)
 
 	covergroup driver_cov;
-		//reset: coverpoint trans_drv.rst;
+		reset: coverpoint trans_drv.rst;
 		clock_en: coverpoint trans_drv.ce;
 		inp_valid: coverpoint trans_drv.inp_valid;
-		arithmetic: coverpoint trans_drv.cmd iff(trans_drv.mode == 1)
-		{
-			bins add = {0};
-			bins sub = {1};
-			bins add_cin = {2};
-			bins sub_cin = {3};
-			bins inc_a = {4};
-			bins dec_a = {5};
-			bins inc_b = {6};
-			bins dec_b = {7};
-			bins cmp = {8};
-			bins inc_mul = {9};
-			bins sh_mul = {10};
+		cmd: coverpoint trans_drv.cmd{
+			bins arithmetic[] = {[0:10]} iff(trans_drv.mode == 1);
+			bins logical[] = {[0:10]} iff(trans_drv.mode == 0);
 		}
-		logical: coverpoint trans_drv.cmd iff(trans_drv.mode == 0)
-		{
-			bins and_cov = {0};
-		 	bins nand_cov = {1};
-			bins or_cov = {2};
-			bins nor_cov = {3};
-			bins xor_cov = {4};
-			bins xnor_cov = {5};
-			bins not_a = {6};
-			bins not_b = {7};
-			bins shr1_a = {8};
-			bins shl1_a = {9};
-			bins shr1_b = {10};
-			bins shl1_b = {11};
-			bins rol_a_b = {12};
-			bins ror_a_b = {13};
-		}
-		arithmeticXinp_valid: cross arithmetic,inp_valid;
-		logicalXinp_valid: cross logical,inp_valid;
+		//arithmeticXinp_valid: cross arithmetic,inp_valid;
+		//logicalXinp_valid: cross logical,inp_valid;
 	endgroup
 
 	covergroup monitor_cov;

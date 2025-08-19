@@ -70,9 +70,9 @@ module top();
 	begin
 		//run_test("base_test");
 		//run_test("reset_test");
-		run_test("arithmetic_test");
+		//run_test("arithmetic_test");
 		//run_test("logical_test");
 		//run_test("latch_test");
-		//run_test("regression_test");
+		run_test("regression_test");
 	end
 endmodule

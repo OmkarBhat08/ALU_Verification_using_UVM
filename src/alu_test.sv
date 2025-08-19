@@ -133,7 +133,7 @@ class regression_test extends alu_base_test;
 		regression_sequence seq;
 		super.run_phase(phase);
 		phase.raise_objection(this, "Objection Raised");
-		repeat(100)
+		repeat(150)
 		begin
 			seq = regression_sequence::type_id::create("seq");	
 			seq.start(env.agnt.seqr);
