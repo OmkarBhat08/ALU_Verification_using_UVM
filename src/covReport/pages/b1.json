@@ -1071,18 +1071,18 @@ b1202:[{dummy:0},
 ,{cr:'c',t:'E',z:'				else',f:'alu_driver.sv',l:'49',h:'279',c:'g'}
 ]}],
 b1217:[{dummy:0},
-{anchor:'cvg1218',items:[{z:'		if(!uvm_config_db #(virtual alu_interfs)::get(this,&#34;&#34;,&#34;vif&#34;...',f:'alu_monitor.sv',l:'17',c:'Y',p:'50.00'}
-,{cr:'m',t:'I',z:'		if(!uvm_config_db #(virtual alu_interfs)::get(this,&#34;&#34;,&#34;vif&#34;...',f:'alu_monitor.sv',l:'17',h:'0',c:'r'}
-,{cr:'c',t:'A',z:'		if(!uvm_config_db #(virtual alu_interfs)::get(this,&#34;&#34;,&#34;vif&#34;...',f:'alu_monitor.sv',l:'17',h:'1',c:'g'}
+{anchor:'cvg1218',items:[{z:'		super.build_phase(phase);',f:'alu_monitor.sv',l:'17',c:'Y',p:'50.00'}
+,{cr:'m',t:'I',z:'		super.build_phase(phase);',f:'alu_monitor.sv',l:'17',h:'0',c:'r'}
+,{cr:'c',t:'A',z:'		super.build_phase(phase);',f:'alu_monitor.sv',l:'17',h:'1',c:'g'}
 ]},
-{anchor:'cvg1219',items:[{z:'			`uvm_fatal(get_type_name,&#34;Not set at top&#34;);',f:'alu_monitor.sv',l:'18',c:'R',p:'0.00'}
-,{cr:'m',t:'I',z:'			`uvm_fatal(get_type_name,&#34;Not set at top&#34;);',f:'alu_monitor.sv',l:'18',h:'0',c:'r'}
-,{cr:'m',t:'A',z:'			`uvm_fatal(get_type_name,&#34;Not set at top&#34;);',f:'alu_monitor.sv',l:'18',h:'0',c:'r'}
+{anchor:'cvg1219',items:[{z:'		if(!uvm_config_db #(virtual alu_interfs)::get(this,&#34;&#34;,&#34;vif&#34;...',f:'alu_monitor.sv',l:'18',c:'R',p:'0.00'}
+,{cr:'m',t:'I',z:'		if(!uvm_config_db #(virtual alu_interfs)::get(this,&#34;&#34;,&#34;vif&#34;...',f:'alu_monitor.sv',l:'18',h:'0',c:'r'}
+,{cr:'m',t:'A',z:'		if(!uvm_config_db #(virtual alu_interfs)::get(this,&#34;&#34;,&#34;vif&#34;...',f:'alu_monitor.sv',l:'18',h:'0',c:'r'}
 ]}],
 b1220:[{dummy:0},
-{anchor:'cvg1221',items:[{z:'			if((((vif.mode == 1) && ( vif.cmd < 4 || (vif.cmd > 7 && vif.cmd < 11)...',f:'alu_monitor.sv',l:'27',c:'G',p:'100.00'}
-,{cr:'c',t:'I',z:'			if((((vif.mode == 1) && ( vif.cmd < 4 || (vif.cmd > 7 && vif.cmd < 11)...',f:'alu_monitor.sv',l:'27',h:'213',c:'g'}
-,{cr:'c',t:'E',z:'			else',f:'alu_monitor.sv',l:'31',h:'387',c:'g'}
+{anchor:'cvg1221',items:[{z:'',f:'alu_monitor.sv',l:'27',c:'G',p:'100.00'}
+,{cr:'c',t:'I',z:'',f:'alu_monitor.sv',l:'27',h:'213',c:'g'}
+,{cr:'c',t:'E',z:'			alu_sequence_item_active_monitor.rst = vif.rst;',f:'alu_monitor.sv',l:'31',h:'387',c:'g'}
 ]}],
 b1229:[{dummy:0},
 {anchor:'cvg1230',items:[{z:'		if(get_is_active == UVM_ACTIVE)',f:'alu_agent.sv',l:'14',c:'Y',p:'50.00'}
@@ -2114,18 +2114,18 @@ b1696:[{dummy:0},
 ,{cr:'c',t:'E',z:'				else',f:'alu_driver.sv',l:'49',h:'279',c:'g'}
 ]}],
 b1711:[{dummy:0},
-{anchor:'cvg1712',items:[{z:'		if(!uvm_config_db #(virtual alu_interfs)::get(this,&#34;&#34;,&#34;vif&#34;...',f:'alu_monitor.sv',l:'17',c:'Y',p:'50.00'}
-,{cr:'m',t:'I',z:'		if(!uvm_config_db #(virtual alu_interfs)::get(this,&#34;&#34;,&#34;vif&#34;...',f:'alu_monitor.sv',l:'17',h:'0',c:'r'}
-,{cr:'c',t:'A',z:'		if(!uvm_config_db #(virtual alu_interfs)::get(this,&#34;&#34;,&#34;vif&#34;...',f:'alu_monitor.sv',l:'17',h:'1',c:'g'}
+{anchor:'cvg1712',items:[{z:'		super.build_phase(phase);',f:'alu_monitor.sv',l:'17',c:'Y',p:'50.00'}
+,{cr:'m',t:'I',z:'		super.build_phase(phase);',f:'alu_monitor.sv',l:'17',h:'0',c:'r'}
+,{cr:'c',t:'A',z:'		super.build_phase(phase);',f:'alu_monitor.sv',l:'17',h:'1',c:'g'}
 ]},
-{anchor:'cvg1713',items:[{z:'			`uvm_fatal(get_type_name,&#34;Not set at top&#34;);',f:'alu_monitor.sv',l:'18',c:'R',p:'0.00'}
-,{cr:'m',t:'I',z:'			`uvm_fatal(get_type_name,&#34;Not set at top&#34;);',f:'alu_monitor.sv',l:'18',h:'0',c:'r'}
-,{cr:'m',t:'A',z:'			`uvm_fatal(get_type_name,&#34;Not set at top&#34;);',f:'alu_monitor.sv',l:'18',h:'0',c:'r'}
+{anchor:'cvg1713',items:[{z:'		if(!uvm_config_db #(virtual alu_interfs)::get(this,&#34;&#34;,&#34;vif&#34;...',f:'alu_monitor.sv',l:'18',c:'R',p:'0.00'}
+,{cr:'m',t:'I',z:'		if(!uvm_config_db #(virtual alu_interfs)::get(this,&#34;&#34;,&#34;vif&#34;...',f:'alu_monitor.sv',l:'18',h:'0',c:'r'}
+,{cr:'m',t:'A',z:'		if(!uvm_config_db #(virtual alu_interfs)::get(this,&#34;&#34;,&#34;vif&#34;...',f:'alu_monitor.sv',l:'18',h:'0',c:'r'}
 ]}],
 b1714:[{dummy:0},
-{anchor:'cvg1715',items:[{z:'			if((((vif.mode == 1) && ( vif.cmd < 4 || (vif.cmd > 7 && vif.cmd < 11)...',f:'alu_monitor.sv',l:'27',c:'G',p:'100.00'}
-,{cr:'c',t:'I',z:'			if((((vif.mode == 1) && ( vif.cmd < 4 || (vif.cmd > 7 && vif.cmd < 11)...',f:'alu_monitor.sv',l:'27',h:'213',c:'g'}
-,{cr:'c',t:'E',z:'			else',f:'alu_monitor.sv',l:'31',h:'387',c:'g'}
+{anchor:'cvg1715',items:[{z:'',f:'alu_monitor.sv',l:'27',c:'G',p:'100.00'}
+,{cr:'c',t:'I',z:'',f:'alu_monitor.sv',l:'27',h:'213',c:'g'}
+,{cr:'c',t:'E',z:'			alu_sequence_item_active_monitor.rst = vif.rst;',f:'alu_monitor.sv',l:'31',h:'387',c:'g'}
 ]}],
 b1723:[{dummy:0},
 {anchor:'cvg1724',items:[{z:'		if(get_is_active == UVM_ACTIVE)',f:'alu_agent.sv',l:'14',c:'Y',p:'50.00'}

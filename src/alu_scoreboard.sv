@@ -7,8 +7,8 @@ class alu_scoreboard extends uvm_scoreboard();
 //	virtual alu_interfs vif;	
 	logic [`POW_2_N - 1 : 0] SH_AMT;
 	reg [3:0] count;
-	uvm_analysis_imp_from_drv #(alu_sequence_item, alu_scoreboard) driver_imp;
-	uvm_analysis_imp_from_mon #(alu_sequence_item, alu_scoreboard) monitor_imp;
+	uvm_analysis_imp_from_drv #(alu_sequence_item, alu_scoreboard) inputs_export;
+	uvm_analysis_imp_from_mon #(alu_sequence_item, alu_scoreboard) outputs_export;
 
 	alu_sequence_item driver_packet[$];
 
@@ -20,8 +20,8 @@ class alu_scoreboard extends uvm_scoreboard();
 
 	function new(string name = "alu_scoreboard", uvm_component parent = null);
 		super.new(name, parent);
-		driver_imp = new("driver_imp", this);
-		monitor_imp = new("monitor_imp", this);
+		inputs_export = new("inputs_export", this);
+		outputs_export = new("outputs_export", this);
 		ref_model_output = new();
 		prev_output = new();
 		condition_packet = new();

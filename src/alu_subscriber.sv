@@ -3,8 +3,8 @@
 
 class alu_subscriber extends uvm_component;
 
-	uvm_analysis_imp_drv_cg #(alu_sequence_item, alu_subscriber) aport_drv;
-	uvm_analysis_imp_mon_cg #(alu_sequence_item, alu_subscriber) aport_mon;
+	uvm_analysis_imp_drv_cg #(alu_sequence_item, alu_subscriber) aport_inputs;
+	uvm_analysis_imp_mon_cg #(alu_sequence_item, alu_subscriber) aport_outputs;
 
 	alu_sequence_item trans_drv, trans_mon;
 	real drv_cov, mon_cov;
@@ -38,8 +38,8 @@ class alu_subscriber extends uvm_component;
 		super.new(name, parent);
 		driver_cov = new();
 		monitor_cov = new();
-		aport_drv = new("aport_drv", this);
-		aport_mon = new("aport_mon", this);
+		aport_inputs = new("aport_inputs", this);
+		aport_outputs = new("aport_outputs", this);
 	endfunction
 
 	function void write_drv_cg(alu_sequence_item t);

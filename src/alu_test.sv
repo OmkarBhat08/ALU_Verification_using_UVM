@@ -33,7 +33,7 @@ class reset_test extends alu_base_test;
 		repeat(1)
 		begin
 			seq = reset_sequence::type_id::create("seq");	
-			seq.start(env.agnt.seqr);
+			seq.start(env.active_agnt.seqr);
 			$display("############################################################################################################################");
 		end
 		phase.drop_objection(this, "Objection Dropped");
@@ -59,7 +59,7 @@ class latch_test extends alu_base_test;
 		repeat(1)
 		begin
 			seq = latch_sequence::type_id::create("seq");	
-			seq.start(env.agnt.seqr);
+			seq.start(env.active_agnt.seqr);
 			$display("############################################################################################################################");
 		end
 		phase.drop_objection(this, "Objection Dropped");
@@ -85,7 +85,7 @@ class arithmetic_test extends alu_base_test;
 		repeat(20)
 		begin
 			seq = arithmetic_sequence::type_id::create("seq");	
-			seq.start(env.agnt.seqr);
+			seq.start(env.active_agnt.seqr);
 			$display("############################################################################################################################");
 		end
 		phase.drop_objection(this, "Objection Dropped");
@@ -111,7 +111,7 @@ class logical_test extends alu_base_test;
 		repeat(20)
 		begin
 			seq = logical_sequence::type_id::create("seq");	
-			seq.start(env.agnt.seqr);
+			seq.start(env.active_agnt.seqr);
 			$display("############################################################################################################################");
 		end
 		phase.drop_objection(this, "Objection Dropped");
@@ -136,7 +136,7 @@ class regression_test extends alu_base_test;
 		repeat(150)
 		begin
 			seq = regression_sequence::type_id::create("seq");	
-			seq.start(env.agnt.seqr);
+			seq.start(env.active_agnt.seqr);
 			$display("############################################################################################################################");
 		end
 		phase.drop_objection(this, "Objection Dropped");

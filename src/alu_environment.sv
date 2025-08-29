@@ -1,5 +1,6 @@
 class alu_environment extends uvm_env;
-	alu_agent agnt;
+	alu_active_agent active_agnt;
+	alu_passive_agent passive_agnt;
 	alu_scoreboard scb;
 	alu_subscriber subscr;
 
@@ -11,17 +12,21 @@ class alu_environment extends uvm_env;
 
 	function void build_phase(uvm_phase phase);
 		super.build_phase(phase);
-		agnt = alu_agent::type_id::create("agnt", this);
+		active_agnt = alu_active_agent::type_id::create("active_agnt", this);
+		passive_agnt = alu_passive_agent::type_id::create("passive_agnt", this);
 		scb = alu_scoreboard::type_id::create("scb", this);
 		subscr = alu_subscriber::type_id::create("subscr", this);
+
+		//uvm_config_db #(uvm_active_passive_enum)::set(this,"passive_agnt", "is_active", UVM_PASSIVE);
+		set_config_int("passive_agnt", "is_active","UVM_PASSIVE");
 	endfunction
 
 	function void connect_phase(uvm_phase phase);
 		super.connect_phase(phase);
-		agnt.mon.item_collected_port.connect(scb.monitor_imp);
-		agnt.drv.item_collected_port.connect(scb.driver_imp);
+		active_agnt.mon.active_item_collected_port.connect(subscr.aport_inputs);
+		active_agnt.mon.active_item_collected_port.connect(scb.inputs_export);
 
-		agnt.drv.item_collected_port.connect(subscr.aport_drv);	
-		agnt.mon.item_collected_port.connect(subscr.aport_mon);	
+		passive_agnt.mon.passive_item_collected_port.connect(scb.outputs_export);	
+		passive_agnt.mon.passive_item_collected_port.connect(subscr.aport_outputs);	
 	endfunction
 endclass
