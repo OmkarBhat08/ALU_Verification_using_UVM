@@ -14,16 +14,18 @@ class alu_subscriber extends uvm_component;
 	covergroup driver_cov;
 		reset: coverpoint trans_drv.rst;
 		clock_en: coverpoint trans_drv.ce;
-		inp_valid: coverpoint trans_drv.inp_valid;
+		inp_valid: coverpoint trans_drv.inp_valid iff(trans_drv.ce  == 1);
+		mode: coverpoint trans_drv.mode iff(trans_drv.ce == 1);
 		cmd: coverpoint trans_drv.cmd{
 			bins arithmetic[] = {[0:10]} iff(trans_drv.mode == 1);
-			bins logical[] = {[0:10]} iff(trans_drv.mode == 0);
+			bins logical[] = {[0:13]} iff(trans_drv.mode == 0);
 		}
 		//arithmeticXinp_valid: cross arithmetic,inp_valid;
 		//logicalXinp_valid: cross logical,inp_valid;
 	endgroup
 
 	covergroup monitor_cov;
+		option.at_least = 1;
 		error: coverpoint trans_mon.err;
 		over_flow: coverpoint trans_mon.oflow;
 		carry_out: coverpoint trans_mon.cout;

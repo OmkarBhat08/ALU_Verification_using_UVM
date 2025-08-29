@@ -1,5 +1,5 @@
 QuestaSim vlog 10.6c Compiler 2017.07 Jul 25 2017
-Start time: 15:02:47 on Aug 19,2025
+Start time: 17:51:23 on Aug 29,2025
 vlog -sv "+acc" "+cover" "+fcover" -l alu_top.log top.sv 
 -- Compiling interface alu_interfs
 ** Note: (vlog-2286) alu_pkg.sv(1): Using implicit +incdir+/tools/mentor/questasim_10.6c/questasim/uvm-1.1d/../verilog_src/uvm-1.1d/src from import uvm_pkg
@@ -14,5 +14,5 @@ vlog -sv "+acc" "+cover" "+fcover" -l alu_top.log top.sv
 
 Top level modules:
 	top
-End time: 15:02:48 on Aug 19,2025, Elapsed time: 0:00:01
+End time: 17:51:24 on Aug 29,2025, Elapsed time: 0:00:01
 Errors: 0, Warnings: 0
