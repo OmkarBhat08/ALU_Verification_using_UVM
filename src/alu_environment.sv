@@ -17,8 +17,7 @@ class alu_environment extends uvm_env;
 		scb = alu_scoreboard::type_id::create("scb", this);
 		subscr = alu_subscriber::type_id::create("subscr", this);
 
-		//uvm_config_db #(uvm_active_passive_enum)::set(this,"passive_agnt", "is_active", UVM_PASSIVE);
-		set_config_int("passive_agnt", "is_active","UVM_PASSIVE");
+		set_config_int("passive_agnt", "is_active",UVM_PASSIVE);
 	endfunction
 
 	function void connect_phase(uvm_phase phase);

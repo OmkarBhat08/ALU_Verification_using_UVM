@@ -25,9 +25,9 @@ class alu_active_monitor extends uvm_monitor;
 		begin
 			repeat(3) @(posedge vif.monitor_cb);
 
-			if((((vif.mode == 1) && ( vif.cmd < 4 || (vif.cmd > 7 && vif.cmd < 11)))||((vif.mode == 0) && (vif.cmd < 6 || vif.cmd == 12 || vif.cmd == 13))) && (vif.inp_valid == 1 || vif.inp_valid == 2))
-				// give a delay
-			$display("--------------------------------------------ACTIVE MONITOR @ %0t----------------------------------------------",$time);
+			//if((((vif.mode == 1) && ( vif.cmd < 4 || (vif.cmd > 7 && vif.cmd < 11)))||((vif.mode == 0) && (vif.cmd < 6 || vif.cmd == 12 || vif.cmd == 13))) && (vif.inp_valid == 1 || vif.inp_valid == 2))
+			//	repeat(1) @(posedge vif.monitor_cb);
+			$display("---------------------------ACTIVE MONITOR @ %0t-----------------------------",$time);
 			alu_sequence_item_active_monitor.rst = vif.rst;
 			alu_sequence_item_active_monitor.ce = vif.ce;
 			alu_sequence_item_active_monitor.mode = vif.mode;
@@ -37,8 +37,17 @@ class alu_active_monitor extends uvm_monitor;
 			alu_sequence_item_active_monitor.opb = vif.opb;
 			alu_sequence_item_active_monitor.cin = vif.cin;
 			
-			$display("From active monitor");
-			alu_sequence_item_active_monitor.print();
+			$display("Field\t\t|\tValue");
+			$display("--------------|---------------");
+			$display("rst\t\t|\t%b", alu_sequence_item_active_monitor.rst);
+			$display("ce\t\t|\t%b", alu_sequence_item_active_monitor.ce);
+			$display("mode\t\t|\t%b", alu_sequence_item_active_monitor.mode);
+			$display("cmd\t\t|\t%0d", alu_sequence_item_active_monitor.cmd);
+			$display("inp_valid\t|\t%b", alu_sequence_item_active_monitor.inp_valid);
+			$display("opa\t\t|\t%0d", alu_sequence_item_active_monitor.opa);
+			$display("opb\t\t|\t%0d", alu_sequence_item_active_monitor.opb);
+			$display("cin\t\t|\t%b", alu_sequence_item_active_monitor.cin);
+			$display("------------------------------");
 			active_item_collected_port.write(alu_sequence_item_active_monitor);
 		end
 	endtask
@@ -70,10 +79,10 @@ class alu_passive_monitor extends uvm_monitor;
 		forever
 		begin
 			repeat(3) @(posedge vif.monitor_cb);
-
-			if((((vif.mode == 1) && ( vif.cmd < 4 || (vif.cmd > 7 && vif.cmd < 11)))||((vif.mode == 0) && (vif.cmd < 6 || vif.cmd == 12 || vif.cmd == 13))) && (vif.inp_valid == 1 || vif.inp_valid == 2))
-				// Give a delay
-			$display("-------------------------------------------PASSIVE MONITOR @ %0t----------------------------------------------",$time);
+				
+			//if((((vif.mode == 1) && ( vif.cmd < 4 || (vif.cmd > 7 && vif.cmd < 11)))||((vif.mode == 0) && (vif.cmd < 6 || vif.cmd == 12 || vif.cmd == 13))) && (vif.inp_valid == 1 || vif.inp_valid == 2))
+			//	repeat(1) @(posedge vif.monitor_cb);
+			$display("--------------------------PASSIVE MONITOR @ %0t-----------------------------",$time);
 			alu_sequence_item_passive_monitor.res = vif.res;
 			alu_sequence_item_passive_monitor.err = vif.err;
 			alu_sequence_item_passive_monitor.oflow = vif.oflow;
@@ -82,8 +91,16 @@ class alu_passive_monitor extends uvm_monitor;
 			alu_sequence_item_passive_monitor.l = vif.l;
 			alu_sequence_item_passive_monitor.e = vif.e;
 
-			$display("From passive monitor");
-			alu_sequence_item_passive_monitor.print();
+			$display("Field\t\t|\tValue");
+			$display("--------------|---------------");
+			$display("res\t\t|\t%0d", alu_sequence_item_passive_monitor.res);
+			$display("err\t\t|\t%b", alu_sequence_item_passive_monitor.err);
+			$display("oflow\t\t|\t%b", alu_sequence_item_passive_monitor.oflow);
+			$display("cout\t\t|\t%b", alu_sequence_item_passive_monitor.cout);
+			$display("g\t\t|\t%b", alu_sequence_item_passive_monitor.g);
+			$display("l\t\t|\t%0d", alu_sequence_item_passive_monitor.l);
+			$display("e\t\t|\t%0d", alu_sequence_item_passive_monitor.e);
+			$display("------------------------------");
 			passive_item_collected_port.write(alu_sequence_item_passive_monitor);
 		end
 	endtask

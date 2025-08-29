@@ -1,5 +1,5 @@
 # vsim -vopt work.top -voptargs="+acc=npr" -assertdebug -l simulation.log -coverage -c -do "coverage save -onexit -assert -directive -cvg -codeAll coverage.ucdb; run -all; exit" 
-# Start time: 20:25:44 on Aug 29,2025
+# Start time: 23:55:21 on Aug 29,2025
 # ** Note: (vsim-3812) Design is being optimized...
 # //  Questa Sim
 # //  Version 10.6c linux Jul 25 2017
@@ -52,21 +52,1258 @@
 # 
 # UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(215) @ 0: reporter [Questa UVM] QUESTA_UVM-1.2.3
 # UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(217) @ 0: reporter [Questa UVM]  questa_uvm::init(+struct)
-# UVM_INFO @ 0: reporter [RNTST] Running test regression_test...
-# ** Fatal: (SIGSEGV) Bad handle or reference.
-#    Time: 0 ns  Iteration: 15  Process: /uvm_pkg::uvm_phase::m_run_phases/#FORK#1847_f6d141e File: /tools/mentor/questasim_10.6c/questasim/linux/../verilog_src/uvm-1.1d/src/base/uvm_common_phases.svh
-# Fatal error in Function alu_pkg/alu_environment::connect_phase at alu_environment.sv line 29
+# UVM_INFO @ 0: reporter [RNTST] Running test arithmetic_test...
+# ---------------------------------------------------------------------------
+# Name                                 Type                       Size  Value
+# ---------------------------------------------------------------------------
+# uvm_test_top                         arithmetic_test            -     @471 
+#   env                                alu_environment            -     @478 
+#     active_agnt                      alu_active_agent           -     @485 
+#       drv                            alu_driver                 -     @670 
+#         item_collected_port          uvm_analysis_port          -     @693 
+#         rsp_port                     uvm_analysis_port          -     @685 
+#         seq_item_port                uvm_seq_item_pull_port     -     @677 
+#       mon                            alu_active_monitor         -     @701 
+#         active_item_collected_port   uvm_analysis_port          -     @712 
+#       seqr                           alu_sequencer              -     @561 
+#         rsp_export                   uvm_analysis_export        -     @568 
+#         seq_item_export              uvm_seq_item_pull_imp      -     @662 
+#         arbitration_queue            array                      0     -    
+#         lock_queue                   array                      0     -    
+#         num_last_reqs                integral                   32    'd1  
+#         num_last_rsps                integral                   32    'd1  
+#     passive_agnt                     alu_passive_agent          -     @492 
+#       mon                            alu_passive_monitor        -     @728 
+#         passive_item_collected_port  uvm_analysis_port          -     @739 
+#     scb                              alu_scoreboard             -     @499 
+#       inputs_export                  uvm_analysis_imp_from_drv  -     @506 
+#       outputs_export                 uvm_analysis_imp_from_mon  -     @514 
+#     subscr                           alu_subscriber             -     @534 
+#       aport_inputs                   uvm_analysis_imp_drv_cg    -     @541 
+#       aport_outputs                  uvm_analysis_imp_mon_cg    -     @549 
+# ---------------------------------------------------------------------------
+# ------------------------------DRIVER @0------------------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	3
+# inp_valid	|	01
+# opa		|	29
+# opb		|	6
+# cin		|	1
+# ------------------------------
+# ---------------------------ACTIVE MONITOR @ 25-----------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	3
+# inp_valid	|	01
+# opa		|	29
+# opb		|	6
+# cin		|	1
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(39) @ 25: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from the driver
+# UVM_INFO alu_subscriber.sv(48) @ 25: uvm_test_top.env.subscr [alu_subscriber] ce = 1 | mode = 1 | inp_valid = 01 | cmd = 3 | opa = 29 | opb = 6 | cin = 1
+# --------------------------PASSIVE MONITOR @ 25-----------------------------
+# Field		|	Value
+# --------------|---------------
+# res		|	z
+# err		|	z
+# oflow		|	z
+# cout		|	z
+# g		|	z
+# l		|	z
+# e		|	z
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(34) @ 25: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from monitor
+# UVM_INFO alu_subscriber.sv(54) @ 25: uvm_test_top.env.subscr [alu_subscriber] res = z | err = z | oflow = z | cout = z | g = z | l = z | e = z
+# UVM_INFO alu_scoreboard.sv(279) @ 25: uvm_test_top.env.scb [alu_scoreboard] 
+# ------------------------------------------------------------------------------
+# 	         SCOREBOARD WAITING FOR INP_VALID 11											
+# ------------------------------------------------------------------------------
+############################################################################################################################
+# ------------------------------DRIVER @25------------------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	3
+# inp_valid	|	11
+# opa		|	255
+# opb		|	60
+# cin		|	0
+# ------------------------------
+# --------------------------PASSIVE MONITOR @ 55-----------------------------
+# Field		|	Value
+# --------------|---------------
+# res		|	195
+# err		|	z
+# oflow		|	0
+# cout		|	z
+# g		|	z
+# l		|	z
+# e		|	z
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(34) @ 55: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from monitor
+# UVM_INFO alu_subscriber.sv(54) @ 55: uvm_test_top.env.subscr [alu_subscriber] res = 195 | err = z | oflow = 0 | cout = z | g = z | l = z | e = z
+# ---------------------------ACTIVE MONITOR @ 55-----------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	3
+# inp_valid	|	11
+# opa		|	255
+# opb		|	60
+# cin		|	0
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(39) @ 55: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from the driver
+# UVM_INFO alu_subscriber.sv(48) @ 55: uvm_test_top.env.subscr [alu_subscriber] ce = 1 | mode = 1 | inp_valid = 11 | cmd = 3 | opa = 255 | opb = 60 | cin = 0
+# Field		|	Reference Output	|	Actual Response
+# --------------|-------------------------------|----------------------------
+# rst		|		0		|		0
+# ce		|		1		|		1
+# mode		|		1		|		1
+# cmd		|		3		|		3
+# inp_valid	|		11		|		11
+# opa		|		255		|		255
+# opb		|		60		|		60	
+# cin		|		0		|		0
+# res		|		195		|		195
+# err		|		z		|		z
+# oflow		|		0		|		0
+# cout		|		z		|		z
+# g		|		z		|		z
+# l		|		z		|		z
+# e		|		z		|		z
+# UVM_INFO alu_scoreboard.sv(304) @ 55: uvm_test_top.env.scb [alu_scoreboard] 
+# ----------------------------------------------------------------------------
+# 	           		TEST PASS																	
+# ----------------------------------------------------------------------------
+############################################################################################################################
+# ------------------------------DRIVER @55------------------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	6
+# inp_valid	|	10
+# opa		|	136
+# opb		|	121
+# cin		|	1
+# ------------------------------
+# ---------------------------ACTIVE MONITOR @ 85-----------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	6
+# inp_valid	|	10
+# opa		|	136
+# opb		|	121
+# cin		|	1
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(39) @ 85: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from the driver
+# UVM_INFO alu_subscriber.sv(48) @ 85: uvm_test_top.env.subscr [alu_subscriber] ce = 1 | mode = 1 | inp_valid = 10 | cmd = 6 | opa = 136 | opb = 121 | cin = 1
+# --------------------------PASSIVE MONITOR @ 85-----------------------------
+# Field		|	Value
+# --------------|---------------
+# res		|	120
+# err		|	z
+# oflow		|	z
+# cout		|	z
+# g		|	z
+# l		|	z
+# e		|	z
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(34) @ 85: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from monitor
+# UVM_INFO alu_subscriber.sv(54) @ 85: uvm_test_top.env.subscr [alu_subscriber] res = 120 | err = z | oflow = z | cout = z | g = z | l = z | e = z
+# Field		|	Reference Output	|	Actual Response
+# --------------|-------------------------------|----------------------------
+# rst		|		0		|		0
+# ce		|		1		|		1
+# mode		|		1		|		1
+# cmd		|		6		|		6
+# inp_valid	|		10		|		10
+# opa		|		136		|		136
+# opb		|		121		|		121	
+# cin		|		1		|		1
+# res		|		122		|		120
+# err		|		z		|		z
+# oflow		|		z		|		z
+# cout		|		z		|		z
+# g		|		z		|		z
+# l		|		z		|		z
+# e		|		z		|		z
+# UVM_INFO alu_scoreboard.sv(310) @ 85: uvm_test_top.env.scb [alu_scoreboard] 
+# ----------------------------------------------------------------------------
+# 	           		TEST FAILED																	
+# ----------------------------------------------------------------------------
+############################################################################################################################
+# ------------------------------DRIVER @85------------------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	4
+# inp_valid	|	11
+# opa		|	115
+# opb		|	234
+# cin		|	0
+# ------------------------------
+# --------------------------PASSIVE MONITOR @ 115-----------------------------
+# Field		|	Value
+# --------------|---------------
+# res		|	115
+# err		|	z
+# oflow		|	z
+# cout		|	z
+# g		|	z
+# l		|	z
+# e		|	z
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(34) @ 115: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from monitor
+# UVM_INFO alu_subscriber.sv(54) @ 115: uvm_test_top.env.subscr [alu_subscriber] res = 115 | err = z | oflow = z | cout = z | g = z | l = z | e = z
+# ---------------------------ACTIVE MONITOR @ 115-----------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	4
+# inp_valid	|	11
+# opa		|	115
+# opb		|	234
+# cin		|	0
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(39) @ 115: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from the driver
+# UVM_INFO alu_subscriber.sv(48) @ 115: uvm_test_top.env.subscr [alu_subscriber] ce = 1 | mode = 1 | inp_valid = 11 | cmd = 4 | opa = 115 | opb = 234 | cin = 0
+# Field		|	Reference Output	|	Actual Response
+# --------------|-------------------------------|----------------------------
+# rst		|		0		|		0
+# ce		|		1		|		1
+# mode		|		1		|		1
+# cmd		|		4		|		4
+# inp_valid	|		11		|		11
+# opa		|		115		|		115
+# opb		|		234		|		234	
+# cin		|		0		|		0
+# res		|		116		|		115
+# err		|		z		|		z
+# oflow		|		z		|		z
+# cout		|		z		|		z
+# g		|		z		|		z
+# l		|		z		|		z
+# e		|		z		|		z
+# UVM_INFO alu_scoreboard.sv(310) @ 115: uvm_test_top.env.scb [alu_scoreboard] 
+# ----------------------------------------------------------------------------
+# 	           		TEST FAILED																	
+# ----------------------------------------------------------------------------
+############################################################################################################################
+# ------------------------------DRIVER @115------------------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	4
+# inp_valid	|	01
+# opa		|	59
+# opb		|	87
+# cin		|	1
+# ------------------------------
+# ---------------------------ACTIVE MONITOR @ 145-----------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	4
+# inp_valid	|	01
+# opa		|	59
+# opb		|	87
+# cin		|	1
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(39) @ 145: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from the driver
+# UVM_INFO alu_subscriber.sv(48) @ 145: uvm_test_top.env.subscr [alu_subscriber] ce = 1 | mode = 1 | inp_valid = 01 | cmd = 4 | opa = 59 | opb = 87 | cin = 1
+# --------------------------PASSIVE MONITOR @ 145-----------------------------
+# Field		|	Value
+# --------------|---------------
+# res		|	59
+# err		|	z
+# oflow		|	z
+# cout		|	z
+# g		|	z
+# l		|	z
+# e		|	z
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(34) @ 145: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from monitor
+# UVM_INFO alu_subscriber.sv(54) @ 145: uvm_test_top.env.subscr [alu_subscriber] res = 59 | err = z | oflow = z | cout = z | g = z | l = z | e = z
+# Field		|	Reference Output	|	Actual Response
+# --------------|-------------------------------|----------------------------
+# rst		|		0		|		0
+# ce		|		1		|		1
+# mode		|		1		|		1
+# cmd		|		4		|		4
+# inp_valid	|		01		|		01
+# opa		|		59		|		59
+# opb		|		87		|		87	
+# cin		|		1		|		1
+# res		|		60		|		59
+# err		|		z		|		z
+# oflow		|		z		|		z
+# cout		|		z		|		z
+# g		|		z		|		z
+# l		|		z		|		z
+# e		|		z		|		z
+# UVM_INFO alu_scoreboard.sv(310) @ 145: uvm_test_top.env.scb [alu_scoreboard] 
+# ----------------------------------------------------------------------------
+# 	           		TEST FAILED																	
+# ----------------------------------------------------------------------------
+############################################################################################################################
+# ------------------------------DRIVER @145------------------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	6
+# inp_valid	|	10
+# opa		|	125
+# opb		|	34
+# cin		|	0
+# ------------------------------
+# --------------------------PASSIVE MONITOR @ 175-----------------------------
+# Field		|	Value
+# --------------|---------------
+# res		|	33
+# err		|	z
+# oflow		|	z
+# cout		|	z
+# g		|	z
+# l		|	z
+# e		|	z
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(34) @ 175: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from monitor
+# UVM_INFO alu_subscriber.sv(54) @ 175: uvm_test_top.env.subscr [alu_subscriber] res = 33 | err = z | oflow = z | cout = z | g = z | l = z | e = z
+# ---------------------------ACTIVE MONITOR @ 175-----------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	6
+# inp_valid	|	10
+# opa		|	125
+# opb		|	34
+# cin		|	0
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(39) @ 175: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from the driver
+# UVM_INFO alu_subscriber.sv(48) @ 175: uvm_test_top.env.subscr [alu_subscriber] ce = 1 | mode = 1 | inp_valid = 10 | cmd = 6 | opa = 125 | opb = 34 | cin = 0
+# Field		|	Reference Output	|	Actual Response
+# --------------|-------------------------------|----------------------------
+# rst		|		0		|		0
+# ce		|		1		|		1
+# mode		|		1		|		1
+# cmd		|		6		|		6
+# inp_valid	|		10		|		10
+# opa		|		125		|		125
+# opb		|		34		|		34	
+# cin		|		0		|		0
+# res		|		35		|		33
+# err		|		z		|		z
+# oflow		|		z		|		z
+# cout		|		z		|		z
+# g		|		z		|		z
+# l		|		z		|		z
+# e		|		z		|		z
+# UVM_INFO alu_scoreboard.sv(310) @ 175: uvm_test_top.env.scb [alu_scoreboard] 
+# ----------------------------------------------------------------------------
+# 	           		TEST FAILED																	
+# ----------------------------------------------------------------------------
+############################################################################################################################
+# ------------------------------DRIVER @175------------------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	10
+# inp_valid	|	10
+# opa		|	229
+# opb		|	19
+# cin		|	0
+# ------------------------------
+# ---------------------------ACTIVE MONITOR @ 205-----------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	10
+# inp_valid	|	10
+# opa		|	229
+# opb		|	19
+# cin		|	0
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(39) @ 205: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from the driver
+# UVM_INFO alu_subscriber.sv(48) @ 205: uvm_test_top.env.subscr [alu_subscriber] ce = 1 | mode = 1 | inp_valid = 10 | cmd = 10 | opa = 229 | opb = 19 | cin = 0
+# --------------------------PASSIVE MONITOR @ 205-----------------------------
+# Field		|	Value
+# --------------|---------------
+# res		|	99
+# err		|	z
+# oflow		|	z
+# cout		|	z
+# g		|	z
+# l		|	z
+# e		|	z
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(34) @ 205: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from monitor
+# UVM_INFO alu_subscriber.sv(54) @ 205: uvm_test_top.env.subscr [alu_subscriber] res = 99 | err = z | oflow = z | cout = z | g = z | l = z | e = z
+# UVM_INFO alu_scoreboard.sv(279) @ 205: uvm_test_top.env.scb [alu_scoreboard] 
+# ------------------------------------------------------------------------------
+# 	         SCOREBOARD WAITING FOR INP_VALID 11											
+# ------------------------------------------------------------------------------
+############################################################################################################################
+# ------------------------------DRIVER @205------------------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	10
+# inp_valid	|	10
+# opa		|	75
+# opb		|	99
+# cin		|	1
+# ------------------------------
+# --------------------------PASSIVE MONITOR @ 235-----------------------------
+# Field		|	Value
+# --------------|---------------
+# res		|	19
+# err		|	z
+# oflow		|	z
+# cout		|	z
+# g		|	z
+# l		|	z
+# e		|	z
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(34) @ 235: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from monitor
+# UVM_INFO alu_subscriber.sv(54) @ 235: uvm_test_top.env.subscr [alu_subscriber] res = 19 | err = z | oflow = z | cout = z | g = z | l = z | e = z
+# ---------------------------ACTIVE MONITOR @ 235-----------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	10
+# inp_valid	|	10
+# opa		|	75
+# opb		|	99
+# cin		|	1
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(39) @ 235: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from the driver
+# UVM_INFO alu_subscriber.sv(48) @ 235: uvm_test_top.env.subscr [alu_subscriber] ce = 1 | mode = 1 | inp_valid = 10 | cmd = 10 | opa = 75 | opb = 99 | cin = 1
+# UVM_INFO alu_scoreboard.sv(279) @ 235: uvm_test_top.env.scb [alu_scoreboard] 
+# ------------------------------------------------------------------------------
+# 	         SCOREBOARD WAITING FOR INP_VALID 11											
+# ------------------------------------------------------------------------------
+############################################################################################################################
+# ------------------------------DRIVER @235------------------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	10
+# inp_valid	|	11
+# opa		|	103
+# opb		|	76
+# cin		|	1
+# ------------------------------
+# ---------------------------ACTIVE MONITOR @ 265-----------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	10
+# inp_valid	|	11
+# opa		|	103
+# opb		|	76
+# cin		|	1
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(39) @ 265: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from the driver
+# UVM_INFO alu_subscriber.sv(48) @ 265: uvm_test_top.env.subscr [alu_subscriber] ce = 1 | mode = 1 | inp_valid = 11 | cmd = 10 | opa = 103 | opb = 76 | cin = 1
+# --------------------------PASSIVE MONITOR @ 265-----------------------------
+# Field		|	Value
+# --------------|---------------
+# res		|	130
+# err		|	z
+# oflow		|	z
+# cout		|	z
+# g		|	z
+# l		|	z
+# e		|	z
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(34) @ 265: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from monitor
+# UVM_INFO alu_subscriber.sv(54) @ 265: uvm_test_top.env.subscr [alu_subscriber] res = 130 | err = z | oflow = z | cout = z | g = z | l = z | e = z
+# Field		|	Reference Output	|	Actual Response
+# --------------|-------------------------------|----------------------------
+# rst		|		0		|		0
+# ce		|		1		|		1
+# mode		|		1		|		1
+# cmd		|		10		|		10
+# inp_valid	|		11		|		11
+# opa		|		103		|		103
+# opb		|		76		|		76	
+# cin		|		1		|		1
+# res		|		296		|		130
+# err		|		z		|		z
+# oflow		|		z		|		z
+# cout		|		z		|		z
+# g		|		z		|		z
+# l		|		z		|		z
+# e		|		z		|		z
+# UVM_INFO alu_scoreboard.sv(310) @ 265: uvm_test_top.env.scb [alu_scoreboard] 
+# ----------------------------------------------------------------------------
+# 	           		TEST FAILED																	
+# ----------------------------------------------------------------------------
+############################################################################################################################
+# ------------------------------DRIVER @265------------------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	2
+# inp_valid	|	11
+# opa		|	32
+# opb		|	136
+# cin		|	1
+# ------------------------------
+# --------------------------PASSIVE MONITOR @ 295-----------------------------
+# Field		|	Value
+# --------------|---------------
+# res		|	169
+# err		|	z
+# oflow		|	z
+# cout		|	0
+# g		|	z
+# l		|	z
+# e		|	z
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(34) @ 295: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from monitor
+# UVM_INFO alu_subscriber.sv(54) @ 295: uvm_test_top.env.subscr [alu_subscriber] res = 169 | err = z | oflow = z | cout = 0 | g = z | l = z | e = z
+# ---------------------------ACTIVE MONITOR @ 295-----------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	2
+# inp_valid	|	11
+# opa		|	32
+# opb		|	136
+# cin		|	1
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(39) @ 295: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from the driver
+# UVM_INFO alu_subscriber.sv(48) @ 295: uvm_test_top.env.subscr [alu_subscriber] ce = 1 | mode = 1 | inp_valid = 11 | cmd = 2 | opa = 32 | opb = 136 | cin = 1
+# Field		|	Reference Output	|	Actual Response
+# --------------|-------------------------------|----------------------------
+# rst		|		0		|		0
+# ce		|		1		|		1
+# mode		|		1		|		1
+# cmd		|		2		|		2
+# inp_valid	|		11		|		11
+# opa		|		32		|		32
+# opb		|		136		|		136	
+# cin		|		1		|		1
+# res		|		169		|		169
+# err		|		z		|		z
+# oflow		|		z		|		z
+# cout		|		0		|		0
+# g		|		z		|		z
+# l		|		z		|		z
+# e		|		z		|		z
+# UVM_INFO alu_scoreboard.sv(304) @ 295: uvm_test_top.env.scb [alu_scoreboard] 
+# ----------------------------------------------------------------------------
+# 	           		TEST PASS																	
+# ----------------------------------------------------------------------------
+############################################################################################################################
+# ------------------------------DRIVER @295------------------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	2
+# inp_valid	|	00
+# opa		|	84
+# opb		|	147
+# cin		|	1
+# ------------------------------
 # 
-# HDL call sequence:
-# Stopped at alu_environment.sv 29 Function alu_pkg/alu_environment::connect_phase
-# called from  /tools/mentor/questasim_10.6c/questasim/linux/../verilog_src/uvm-1.1d/src/base/uvm_common_phases.svh 96 Function uvm_pkg/uvm_connect_phase::exec_func
-# called from  /tools/mentor/questasim_10.6c/questasim/linux/../verilog_src/uvm-1.1d/src/base/uvm_bottomup_phase.svh 108 Function uvm_pkg/uvm_bottomup_phase::execute
-# called from  /tools/mentor/questasim_10.6c/questasim/linux/../verilog_src/uvm-1.1d/src/base/uvm_bottomup_phase.svh 81 Function uvm_pkg/uvm_bottomup_phase::traverse
-# called from  /tools/mentor/questasim_10.6c/questasim/linux/../verilog_src/uvm-1.1d/src/base/uvm_bottomup_phase.svh 61 Function uvm_pkg/uvm_bottomup_phase::traverse
-# called from  /tools/mentor/questasim_10.6c/questasim/linux/../verilog_src/uvm-1.1d/src/base/uvm_bottomup_phase.svh 61 Function uvm_pkg/uvm_bottomup_phase::traverse
-# called from  /tools/mentor/questasim_10.6c/questasim/linux/../verilog_src/uvm-1.1d/src/base/uvm_phase.svh 1156 Task uvm_pkg/uvm_phase::execute_phase
-# called from  /tools/mentor/questasim_10.6c/questasim/linux/../verilog_src/uvm-1.1d/src/base/uvm_phase.svh 1847 Task uvm_pkg/uvm_phase::m_run_phases
 # 
-#  exit
-# End time: 20:25:50 on Aug 29,2025, Elapsed time: 0:00:06
-# Errors: 2, Warnings: 1
+# 
+# Error flag is low when inp_valid is 0
+# 
+# 
+# 
+# Error flag is low when inp_valid is 0
+# ---------------------------ACTIVE MONITOR @ 325-----------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	2
+# inp_valid	|	00
+# opa		|	84
+# opb		|	147
+# cin		|	1
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(39) @ 325: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from the driver
+# UVM_INFO alu_subscriber.sv(48) @ 325: uvm_test_top.env.subscr [alu_subscriber] ce = 1 | mode = 1 | inp_valid = 00 | cmd = 2 | opa = 84 | opb = 147 | cin = 1
+# --------------------------PASSIVE MONITOR @ 325-----------------------------
+# Field		|	Value
+# --------------|---------------
+# res		|	169
+# err		|	z
+# oflow		|	z
+# cout		|	0
+# g		|	z
+# l		|	z
+# e		|	z
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(34) @ 325: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from monitor
+# UVM_INFO alu_subscriber.sv(54) @ 325: uvm_test_top.env.subscr [alu_subscriber] res = 169 | err = z | oflow = z | cout = 0 | g = z | l = z | e = z
+# Field		|	Reference Output	|	Actual Response
+# --------------|-------------------------------|----------------------------
+# rst		|		0		|		0
+# ce		|		1		|		1
+# mode		|		1		|		1
+# cmd		|		2		|		2
+# inp_valid	|		00		|		00
+# opa		|		84		|		84
+# opb		|		147		|		147	
+# cin		|		1		|		1
+# res		|		z		|		169
+# err		|		1		|		z
+# oflow		|		z		|		z
+# cout		|		z		|		0
+# g		|		z		|		z
+# l		|		z		|		z
+# e		|		z		|		z
+# UVM_INFO alu_scoreboard.sv(310) @ 325: uvm_test_top.env.scb [alu_scoreboard] 
+# ----------------------------------------------------------------------------
+# 	           		TEST FAILED																	
+# ----------------------------------------------------------------------------
+############################################################################################################################
+# ------------------------------DRIVER @325------------------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	2
+# inp_valid	|	00
+# opa		|	181
+# opb		|	227
+# cin		|	0
+# ------------------------------
+# 
+# 
+# 
+# Error flag is low when inp_valid is 0
+# 
+# 
+# 
+# Error flag is low when inp_valid is 0
+# 
+# 
+# 
+# Error flag is low when inp_valid is 0
+# --------------------------PASSIVE MONITOR @ 355-----------------------------
+# Field		|	Value
+# --------------|---------------
+# res		|	168
+# err		|	z
+# oflow		|	z
+# cout		|	0
+# g		|	z
+# l		|	z
+# e		|	z
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(34) @ 355: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from monitor
+# UVM_INFO alu_subscriber.sv(54) @ 355: uvm_test_top.env.subscr [alu_subscriber] res = 168 | err = z | oflow = z | cout = 0 | g = z | l = z | e = z
+# ---------------------------ACTIVE MONITOR @ 355-----------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	2
+# inp_valid	|	00
+# opa		|	181
+# opb		|	227
+# cin		|	0
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(39) @ 355: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from the driver
+# UVM_INFO alu_subscriber.sv(48) @ 355: uvm_test_top.env.subscr [alu_subscriber] ce = 1 | mode = 1 | inp_valid = 00 | cmd = 2 | opa = 181 | opb = 227 | cin = 0
+# Field		|	Reference Output	|	Actual Response
+# --------------|-------------------------------|----------------------------
+# rst		|		0		|		0
+# ce		|		1		|		1
+# mode		|		1		|		1
+# cmd		|		2		|		2
+# inp_valid	|		00		|		00
+# opa		|		181		|		181
+# opb		|		227		|		227	
+# cin		|		0		|		0
+# res		|		z		|		168
+# err		|		1		|		z
+# oflow		|		z		|		z
+# cout		|		z		|		0
+# g		|		z		|		z
+# l		|		z		|		z
+# e		|		z		|		z
+# UVM_INFO alu_scoreboard.sv(310) @ 355: uvm_test_top.env.scb [alu_scoreboard] 
+# ----------------------------------------------------------------------------
+# 	           		TEST FAILED																	
+# ----------------------------------------------------------------------------
+############################################################################################################################
+# ------------------------------DRIVER @355------------------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	5
+# inp_valid	|	11
+# opa		|	249
+# opb		|	157
+# cin		|	0
+# ------------------------------
+# 
+# 
+# 
+# Error flag is low when inp_valid is 0
+# ---------------------------ACTIVE MONITOR @ 385-----------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	5
+# inp_valid	|	11
+# opa		|	249
+# opb		|	157
+# cin		|	0
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(39) @ 385: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from the driver
+# UVM_INFO alu_subscriber.sv(48) @ 385: uvm_test_top.env.subscr [alu_subscriber] ce = 1 | mode = 1 | inp_valid = 11 | cmd = 5 | opa = 249 | opb = 157 | cin = 0
+# --------------------------PASSIVE MONITOR @ 385-----------------------------
+# Field		|	Value
+# --------------|---------------
+# res		|	248
+# err		|	z
+# oflow		|	z
+# cout		|	z
+# g		|	z
+# l		|	z
+# e		|	z
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(34) @ 385: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from monitor
+# UVM_INFO alu_subscriber.sv(54) @ 385: uvm_test_top.env.subscr [alu_subscriber] res = 248 | err = z | oflow = z | cout = z | g = z | l = z | e = z
+# Field		|	Reference Output	|	Actual Response
+# --------------|-------------------------------|----------------------------
+# rst		|		0		|		0
+# ce		|		1		|		1
+# mode		|		1		|		1
+# cmd		|		5		|		5
+# inp_valid	|		11		|		11
+# opa		|		249		|		249
+# opb		|		157		|		157	
+# cin		|		0		|		0
+# res		|		248		|		248
+# err		|		z		|		z
+# oflow		|		z		|		z
+# cout		|		z		|		z
+# g		|		z		|		z
+# l		|		z		|		z
+# e		|		z		|		z
+# UVM_INFO alu_scoreboard.sv(304) @ 385: uvm_test_top.env.scb [alu_scoreboard] 
+# ----------------------------------------------------------------------------
+# 	           		TEST PASS																	
+# ----------------------------------------------------------------------------
+############################################################################################################################
+# ------------------------------DRIVER @385------------------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	8
+# inp_valid	|	01
+# opa		|	166
+# opb		|	249
+# cin		|	0
+# ------------------------------
+# --------------------------PASSIVE MONITOR @ 415-----------------------------
+# Field		|	Value
+# --------------|---------------
+# res		|	z
+# err		|	z
+# oflow		|	z
+# cout		|	z
+# g		|	1
+# l		|	z
+# e		|	z
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(34) @ 415: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from monitor
+# UVM_INFO alu_subscriber.sv(54) @ 415: uvm_test_top.env.subscr [alu_subscriber] res = z | err = z | oflow = z | cout = z | g = 1 | l = z | e = z
+# ---------------------------ACTIVE MONITOR @ 415-----------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	8
+# inp_valid	|	01
+# opa		|	166
+# opb		|	249
+# cin		|	0
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(39) @ 415: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from the driver
+# UVM_INFO alu_subscriber.sv(48) @ 415: uvm_test_top.env.subscr [alu_subscriber] ce = 1 | mode = 1 | inp_valid = 01 | cmd = 8 | opa = 166 | opb = 249 | cin = 0
+# UVM_INFO alu_scoreboard.sv(279) @ 415: uvm_test_top.env.scb [alu_scoreboard] 
+# ------------------------------------------------------------------------------
+# 	         SCOREBOARD WAITING FOR INP_VALID 11											
+# ------------------------------------------------------------------------------
+############################################################################################################################
+# ------------------------------DRIVER @415------------------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	8
+# inp_valid	|	11
+# opa		|	93
+# opb		|	81
+# cin		|	1
+# ------------------------------
+# ---------------------------ACTIVE MONITOR @ 445-----------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	8
+# inp_valid	|	11
+# opa		|	93
+# opb		|	81
+# cin		|	1
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(39) @ 445: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from the driver
+# UVM_INFO alu_subscriber.sv(48) @ 445: uvm_test_top.env.subscr [alu_subscriber] ce = 1 | mode = 1 | inp_valid = 11 | cmd = 8 | opa = 93 | opb = 81 | cin = 1
+# --------------------------PASSIVE MONITOR @ 445-----------------------------
+# Field		|	Value
+# --------------|---------------
+# res		|	z
+# err		|	z
+# oflow		|	z
+# cout		|	z
+# g		|	1
+# l		|	z
+# e		|	z
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(34) @ 445: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from monitor
+# UVM_INFO alu_subscriber.sv(54) @ 445: uvm_test_top.env.subscr [alu_subscriber] res = z | err = z | oflow = z | cout = z | g = 1 | l = z | e = z
+# Field		|	Reference Output	|	Actual Response
+# --------------|-------------------------------|----------------------------
+# rst		|		0		|		0
+# ce		|		1		|		1
+# mode		|		1		|		1
+# cmd		|		8		|		8
+# inp_valid	|		11		|		11
+# opa		|		93		|		93
+# opb		|		81		|		81	
+# cin		|		1		|		1
+# res		|		z		|		z
+# err		|		z		|		z
+# oflow		|		z		|		z
+# cout		|		z		|		z
+# g		|		1		|		1
+# l		|		z		|		z
+# e		|		z		|		z
+# UVM_INFO alu_scoreboard.sv(304) @ 445: uvm_test_top.env.scb [alu_scoreboard] 
+# ----------------------------------------------------------------------------
+# 	           		TEST PASS																	
+# ----------------------------------------------------------------------------
+############################################################################################################################
+# ------------------------------DRIVER @445------------------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	6
+# inp_valid	|	00
+# opa		|	205
+# opb		|	90
+# cin		|	1
+# ------------------------------
+# 
+# 
+# 
+# Error flag is low when inp_valid is 0
+# 
+# 
+# 
+# Error flag is low when inp_valid is 0
+# --------------------------PASSIVE MONITOR @ 475-----------------------------
+# Field		|	Value
+# --------------|---------------
+# res		|	z
+# err		|	z
+# oflow		|	z
+# cout		|	z
+# g		|	1
+# l		|	z
+# e		|	z
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(34) @ 475: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from monitor
+# UVM_INFO alu_subscriber.sv(54) @ 475: uvm_test_top.env.subscr [alu_subscriber] res = z | err = z | oflow = z | cout = z | g = 1 | l = z | e = z
+# ---------------------------ACTIVE MONITOR @ 475-----------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	6
+# inp_valid	|	00
+# opa		|	205
+# opb		|	90
+# cin		|	1
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(39) @ 475: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from the driver
+# UVM_INFO alu_subscriber.sv(48) @ 475: uvm_test_top.env.subscr [alu_subscriber] ce = 1 | mode = 1 | inp_valid = 00 | cmd = 6 | opa = 205 | opb = 90 | cin = 1
+# Field		|	Reference Output	|	Actual Response
+# --------------|-------------------------------|----------------------------
+# rst		|		0		|		0
+# ce		|		1		|		1
+# mode		|		1		|		1
+# cmd		|		6		|		6
+# inp_valid	|		00		|		00
+# opa		|		205		|		205
+# opb		|		90		|		90	
+# cin		|		1		|		1
+# res		|		z		|		z
+# err		|		1		|		z
+# oflow		|		z		|		z
+# cout		|		z		|		z
+# g		|		z		|		1
+# l		|		z		|		z
+# e		|		z		|		z
+# UVM_INFO alu_scoreboard.sv(310) @ 475: uvm_test_top.env.scb [alu_scoreboard] 
+# ----------------------------------------------------------------------------
+# 	           		TEST FAILED																	
+# ----------------------------------------------------------------------------
+############################################################################################################################
+# ------------------------------DRIVER @475------------------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	8
+# inp_valid	|	10
+# opa		|	104
+# opb		|	226
+# cin		|	0
+# ------------------------------
+# 
+# 
+# 
+# Error flag is low when inp_valid is 0
+# ---------------------------ACTIVE MONITOR @ 505-----------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	8
+# inp_valid	|	10
+# opa		|	104
+# opb		|	226
+# cin		|	0
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(39) @ 505: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from the driver
+# UVM_INFO alu_subscriber.sv(48) @ 505: uvm_test_top.env.subscr [alu_subscriber] ce = 1 | mode = 1 | inp_valid = 10 | cmd = 8 | opa = 104 | opb = 226 | cin = 0
+# --------------------------PASSIVE MONITOR @ 505-----------------------------
+# Field		|	Value
+# --------------|---------------
+# res		|	z
+# err		|	z
+# oflow		|	z
+# cout		|	z
+# g		|	z
+# l		|	1
+# e		|	z
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(34) @ 505: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from monitor
+# UVM_INFO alu_subscriber.sv(54) @ 505: uvm_test_top.env.subscr [alu_subscriber] res = z | err = z | oflow = z | cout = z | g = z | l = 1 | e = z
+# UVM_INFO alu_scoreboard.sv(279) @ 505: uvm_test_top.env.scb [alu_scoreboard] 
+# ------------------------------------------------------------------------------
+# 	         SCOREBOARD WAITING FOR INP_VALID 11											
+# ------------------------------------------------------------------------------
+############################################################################################################################
+# ------------------------------DRIVER @505------------------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	8
+# inp_valid	|	00
+# opa		|	167
+# opb		|	215
+# cin		|	1
+# ------------------------------
+# 
+# 
+# 
+# Error flag is low when inp_valid is 0
+# 
+# 
+# 
+# Error flag is low when inp_valid is 0
+# --------------------------PASSIVE MONITOR @ 535-----------------------------
+# Field		|	Value
+# --------------|---------------
+# res		|	z
+# err		|	z
+# oflow		|	z
+# cout		|	z
+# g		|	z
+# l		|	1
+# e		|	z
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(34) @ 535: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from monitor
+# UVM_INFO alu_subscriber.sv(54) @ 535: uvm_test_top.env.subscr [alu_subscriber] res = z | err = z | oflow = z | cout = z | g = z | l = 1 | e = z
+# ---------------------------ACTIVE MONITOR @ 535-----------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	8
+# inp_valid	|	00
+# opa		|	167
+# opb		|	215
+# cin		|	1
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(39) @ 535: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from the driver
+# UVM_INFO alu_subscriber.sv(48) @ 535: uvm_test_top.env.subscr [alu_subscriber] ce = 1 | mode = 1 | inp_valid = 00 | cmd = 8 | opa = 167 | opb = 215 | cin = 1
+# Field		|	Reference Output	|	Actual Response
+# --------------|-------------------------------|----------------------------
+# rst		|		0		|		0
+# ce		|		1		|		1
+# mode		|		1		|		1
+# cmd		|		8		|		8
+# inp_valid	|		00		|		00
+# opa		|		167		|		167
+# opb		|		215		|		215	
+# cin		|		1		|		1
+# res		|		z		|		z
+# err		|		1		|		z
+# oflow		|		z		|		z
+# cout		|		z		|		z
+# g		|		z		|		z
+# l		|		z		|		1
+# e		|		z		|		z
+# UVM_INFO alu_scoreboard.sv(310) @ 535: uvm_test_top.env.scb [alu_scoreboard] 
+# ----------------------------------------------------------------------------
+# 	           		TEST FAILED																	
+# ----------------------------------------------------------------------------
+############################################################################################################################
+# ------------------------------DRIVER @535------------------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	3
+# inp_valid	|	00
+# opa		|	135
+# opb		|	160
+# cin		|	1
+# ------------------------------
+# 
+# 
+# 
+# Error flag is low when inp_valid is 0
+# 
+# 
+# 
+# Error flag is low when inp_valid is 0
+# 
+# 
+# 
+# Error flag is low when inp_valid is 0
+# ---------------------------ACTIVE MONITOR @ 565-----------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	3
+# inp_valid	|	00
+# opa		|	135
+# opb		|	160
+# cin		|	1
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(39) @ 565: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from the driver
+# UVM_INFO alu_subscriber.sv(48) @ 565: uvm_test_top.env.subscr [alu_subscriber] ce = 1 | mode = 1 | inp_valid = 00 | cmd = 3 | opa = 135 | opb = 160 | cin = 1
+# --------------------------PASSIVE MONITOR @ 565-----------------------------
+# Field		|	Value
+# --------------|---------------
+# res		|	z
+# err		|	z
+# oflow		|	z
+# cout		|	z
+# g		|	z
+# l		|	1
+# e		|	z
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(34) @ 565: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from monitor
+# UVM_INFO alu_subscriber.sv(54) @ 565: uvm_test_top.env.subscr [alu_subscriber] res = z | err = z | oflow = z | cout = z | g = z | l = 1 | e = z
+# Field		|	Reference Output	|	Actual Response
+# --------------|-------------------------------|----------------------------
+# rst		|		0		|		0
+# ce		|		1		|		1
+# mode		|		1		|		1
+# cmd		|		3		|		3
+# inp_valid	|		00		|		00
+# opa		|		135		|		135
+# opb		|		160		|		160	
+# cin		|		1		|		1
+# res		|		z		|		z
+# err		|		1		|		z
+# oflow		|		z		|		z
+# cout		|		z		|		z
+# g		|		z		|		z
+# l		|		z		|		1
+# e		|		z		|		z
+# UVM_INFO alu_scoreboard.sv(310) @ 565: uvm_test_top.env.scb [alu_scoreboard] 
+# ----------------------------------------------------------------------------
+# 	           		TEST FAILED																	
+# ----------------------------------------------------------------------------
+############################################################################################################################
+# ------------------------------DRIVER @565------------------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	1
+# inp_valid	|	00
+# opa		|	229
+# opb		|	31
+# cin		|	1
+# ------------------------------
+# 
+# 
+# 
+# Error flag is low when inp_valid is 0
+# 
+# 
+# 
+# Error flag is low when inp_valid is 0
+# 
+# 
+# 
+# Error flag is low when inp_valid is 0
+# --------------------------PASSIVE MONITOR @ 595-----------------------------
+# Field		|	Value
+# --------------|---------------
+# res		|	z
+# err		|	z
+# oflow		|	z
+# cout		|	z
+# g		|	z
+# l		|	1
+# e		|	z
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(34) @ 595: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from monitor
+# UVM_INFO alu_subscriber.sv(54) @ 595: uvm_test_top.env.subscr [alu_subscriber] res = z | err = z | oflow = z | cout = z | g = z | l = 1 | e = z
+# ---------------------------ACTIVE MONITOR @ 595-----------------------------
+# Field		|	Value
+# --------------|---------------
+# rst		|	0
+# ce		|	1
+# mode		|	1
+# cmd		|	1
+# inp_valid	|	00
+# opa		|	229
+# opb		|	31
+# cin		|	1
+# ------------------------------
+# UVM_INFO alu_scoreboard.sv(39) @ 595: uvm_test_top.env.scb [alu_scoreboard] Scoreboard received packet from the driver
+# UVM_INFO alu_subscriber.sv(48) @ 595: uvm_test_top.env.subscr [alu_subscriber] ce = 1 | mode = 1 | inp_valid = 00 | cmd = 1 | opa = 229 | opb = 31 | cin = 1
+# Field		|	Reference Output	|	Actual Response
+# --------------|-------------------------------|----------------------------
+# rst		|		0		|		0
+# ce		|		1		|		1
+# mode		|		1		|		1
+# cmd		|		1		|		1
+# inp_valid	|		00		|		00
+# opa		|		229		|		229
+# opb		|		31		|		31	
+# cin		|		1		|		1
+# res		|		z		|		z
+# err		|		1		|		z
+# oflow		|		z		|		z
+# cout		|		z		|		z
+# g		|		z		|		z
+# l		|		z		|		1
+# e		|		z		|		z
+# UVM_INFO alu_scoreboard.sv(310) @ 595: uvm_test_top.env.scb [alu_scoreboard] 
+# ----------------------------------------------------------------------------
+# 	           		TEST FAILED																	
+# ----------------------------------------------------------------------------
+############################################################################################################################
+# UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_objection.svh(1268) @ 595: reporter [TEST_DONE] 'run' phase is ready to proceed to the 'extract' phase
+# UVM_INFO alu_subscriber.sv(65) @ 595: uvm_test_top.env.subscr [alu_subscriber] [Driver]: Coverage --> 56.40
+# UVM_INFO alu_subscriber.sv(66) @ 595: uvm_test_top.env.subscr [alu_subscriber] [Monitor]: Coverage --> 33.33
+# 
+# --- UVM Report Summary ---
+# 
+# ** Report counts by severity
+# UVM_INFO :  106
+# UVM_WARNING :    0
+# UVM_ERROR :    0
+# UVM_FATAL :    0
+# ** Report counts by id
+# [Questa UVM]     2
+# [RNTST]     1
+# [TEST_DONE]     1
+# [alu_scoreboard]    60
+# [alu_subscriber]    42
+# ** Note: $finish    : /tools/mentor/questasim_10.6c/questasim/linux/../verilog_src/uvm-1.1d/src/base/uvm_root.svh(430)
+#    Time: 595 ns  Iteration: 63  Instance: /top
+# Saving coverage database on exit...
+# End time: 23:55:25 on Aug 29,2025, Elapsed time: 0:00:04
+# Errors: 0, Warnings: 1

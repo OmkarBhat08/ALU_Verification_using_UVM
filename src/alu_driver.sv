@@ -65,8 +65,18 @@ class alu_driver extends uvm_driver#(alu_sequence_item);
 				vif.opb <= req.opb;
 				vif.cin <= req.cin;
 			
-		$display("--------------------------------------------------DRIVER @%0t----------------------------------------------",$time);
-		req.print();
+		$display("------------------------------DRIVER @%0t------------------------------------",$time);
+		$display("Field\t\t|\tValue");
+		$display("--------------|---------------");
+		$display("rst\t\t|\t%b", req.rst);
+		$display("ce\t\t|\t%b", req.ce);
+		$display("mode\t\t|\t%b", req.mode);
+		$display("cmd\t\t|\t%0d", req.cmd);
+		$display("inp_valid\t|\t%b", req.inp_valid);
+		$display("opa\t\t|\t%0d", req.opa);
+		$display("opb\t\t|\t%0d", req.opb);
+		$display("cin\t\t|\t%b", req.cin);
+		$display("------------------------------");
 
 		repeat(3) @(posedge vif.driver_cb);
 
@@ -89,17 +99,18 @@ class alu_driver extends uvm_driver#(alu_sequence_item);
 				vif.opb = req.opb;
 				vif.cin = req.cin;
 			
-		$display("--------------------------------------------------DRIVER @%0t----------------------------------------------",$time);
-				$display("Field\t\t|\tValue\t|");
+		$display("------------------------------DRIVER @%0t------------------------------------",$time);
+				$display("Field\t\t|\tValue");
 				$display("--------------|---------------");
-				$display("rst\t\t|\t%b", vif.rst);
-				$display("ce\t\t|\t%b", vif.ce);
-				$display("mode\t\t|\t%b", vif.mode);
-				$display("cmd\t\t|\t%0d", vif.cmd);
-				$display("inp_valid\t|\t%b", vif.inp_valid);
-				$display("opa\t\t|\t%0d", vif.opa);
-				$display("opb\t\t|\t%0d", vif.opb);
-				$display("cin\t\t|\t%b", vif.cin);
+				$display("rst\t\t|\t%b", req.rst);
+				$display("ce\t\t|\t%b", req.ce);
+				$display("mode\t\t|\t%b", temp_mode);
+				$display("cmd\t\t|\t%0d", temp_cmd);
+				$display("inp_valid\t|\t%b", req.inp_valid);
+				$display("opa\t\t|\t%0d", req.opa);
+				$display("opb\t\t|\t%0d", req.opb);
+				$display("cin\t\t|\t%b", req.cin);
+				$display("------------------------------");
 
 		repeat(3) @(posedge vif.driver_cb);
 

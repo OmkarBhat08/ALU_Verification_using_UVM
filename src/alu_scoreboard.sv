@@ -113,7 +113,7 @@ class alu_scoreboard extends uvm_scoreboard();
 											4'd2:	//ADD_CIN
 											begin
 												ref_model_output.res = packet2.opa + packet2.opb + packet2.cin;
-												ref_model_output.cout = (ref_model_output.res[`WIDTH])?1:1'bz;
+												ref_model_output.cout = (ref_model_output.res[`WIDTH])?1:1'b0;
 											end
 											4'd3:	// SUB_CIN
 											begin
@@ -283,15 +283,15 @@ class alu_scoreboard extends uvm_scoreboard();
 			else
 			begin		// Compare 
 				$display("Field\t\t|\tReference Output\t|\tActual Response");
-				$display("--------------|-------------------------------|-----------------------------");
-				$display("rst\t\t|\t\t%b\t\t|\t\t%b", ref_model_output.rst, packet1.rst);
-				$display("ce\t\t|\t\t%b\t\t|\t\t%b", ref_model_output.ce, packet1.ce);
-				$display("mode\t\t|\t\t%b\t\t|\t\t%b", ref_model_output.mode, packet1.mode);
-				$display("cmd\t\t|\t\t%0d\t\t|\t\t%0d", ref_model_output.cmd, packet1.cmd);
-				$display("inp_valid\t|\t\t%b\t\t|\t\t%b", ref_model_output.inp_valid, packet1.inp_valid);
-				$display("opa\t\t|\t\t%0d\t\t|\t\t%0d", ref_model_output.opa, packet1.opa);
-				$display("opb\t\t|\t\t%0d\t\t|\t\t%0d	", ref_model_output.opb, packet1.opb);
-				$display("cin\t\t|\t\t%b\t\t|\t\t%b", ref_model_output.cin, packet1.cin);
+				$display("--------------|-------------------------------|----------------------------");
+				$display("rst\t\t|\t\t%b\t\t|\t\t%b", ref_model_output.rst, packet2.rst);
+				$display("ce\t\t|\t\t%b\t\t|\t\t%b", ref_model_output.ce, packet2.ce);
+				$display("mode\t\t|\t\t%b\t\t|\t\t%b", ref_model_output.mode, packet2.mode);
+				$display("cmd\t\t|\t\t%0d\t\t|\t\t%0d", ref_model_output.cmd, packet2.cmd);
+				$display("inp_valid\t|\t\t%b\t\t|\t\t%b", ref_model_output.inp_valid, packet2.inp_valid);
+				$display("opa\t\t|\t\t%0d\t\t|\t\t%0d", ref_model_output.opa, packet2.opa);
+				$display("opb\t\t|\t\t%0d\t\t|\t\t%0d	", ref_model_output.opb, packet2.opb);
+				$display("cin\t\t|\t\t%b\t\t|\t\t%b", ref_model_output.cin, packet2.cin);
 				$display("res\t\t|\t\t%0d\t\t|\t\t%0d", ref_model_output.res, packet1.res);
 				$display("err\t\t|\t\t%b\t\t|\t\t%b", ref_model_output.err, packet1.err);
 				$display("oflow\t\t|\t\t%b\t\t|\t\t%b", ref_model_output.oflow, packet1.oflow);
@@ -301,15 +301,15 @@ class alu_scoreboard extends uvm_scoreboard();
 				$display("e\t\t|\t\t%b\t\t|\t\t%b", ref_model_output.e, packet1.e);
 				if((packet1.res === ref_model_output.res) && (packet1.err === ref_model_output.err) && (packet1.oflow === ref_model_output.oflow) && (packet1.cout === ref_model_output.cout) && (packet1.g === ref_model_output.g) && (packet1.l === ref_model_output.l) && (packet1.e === ref_model_output.e))
 				begin
-					`uvm_info(get_type_name(), $sformatf("\n------------------------------------------------------------------------------"), UVM_NONE);
+					`uvm_info(get_type_name(), $sformatf("\n----------------------------------------------------------------------------"), UVM_NONE);
 					$display("	           		TEST PASS																	");
-					$display("------------------------------------------------------------------------------");
+					$display("----------------------------------------------------------------------------");
 				end
 				else
 				begin
-					`uvm_info(get_type_name(), $sformatf("\n------------------------------------------------------------------------------"), UVM_NONE);
+					`uvm_info(get_type_name(), $sformatf("\n----------------------------------------------------------------------------"), UVM_NONE);
 					$display("	           		TEST FAILED																	");
-					$display("------------------------------------------------------------------------------");
+					$display("----------------------------------------------------------------------------");
 				end
 			end
 		end
