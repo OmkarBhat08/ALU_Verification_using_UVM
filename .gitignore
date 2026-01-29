@@ -1,0 +1,7 @@
+/src/work/
+/src/covReport/
+/src/coverage.ucdb
+/src/top.log
+src/dump.vcd
+src/vsim_stacktrace.vstf
+src/alu_top.log
